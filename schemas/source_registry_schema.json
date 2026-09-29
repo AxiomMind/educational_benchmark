@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CHisEval Source Registry V1",
+  "type": "object",
+  "required": ["version", "defaults", "sources"],
+  "properties": {
+    "version": {"const": 1},
+    "defaults": {"type": "object"},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id", "site_name", "base_url", "source_type", "exam_type",
+          "has_answer", "year_range", "estimated_questions", "login_required",
+          "robots_checked", "terms_checked", "license_status",
+          "redistribution_allowed", "collector", "status", "notes"
+        ],
+        "properties": {
+          "source_id": {"type": "string"},
+          "site_name": {"type": "string"},
+          "base_url": {"type": "string", "format": "uri"},
+          "source_type": {"enum": ["html", "pdf", "mixed"]},
+          "exam_type": {"type": "string"},
+          "has_answer": {"type": "boolean"},
+          "year_range": {},
+          "estimated_questions": {"type": ["integer", "null"]},
+          "login_required": {"type": "boolean"},
+          "robots_checked": {"type": "boolean"},
+          "terms_checked": {"type": "boolean"},
+          "license_status": {"enum": ["allowed", "research_only", "unknown", "restricted"]},
+          "redistribution_allowed": {"type": "boolean"},
+          "collector": {"type": "string"},
+          "status": {"enum": ["draft", "pending_review", "approved", "disabled", "rejected"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

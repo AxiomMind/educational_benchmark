@@ -1,0 +1,18 @@
+version: 1
+paths:
+  raw: data/raw
+  parsed: data/parsed
+  cleaned: data/cleaned
+  reviewed: data/reviewed
+  rejected: data/rejected
+  reports: data/reports
+  state: data/state
+  logs: logs
+
+deduplication:
+  near_duplicate_threshold: 0.88
+  char_ngram_size: 3
+
+validation:
+  earliest_reasonable_year: 1900
+  latest_year_offset: 1

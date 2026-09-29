@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CHisEval Review Decision",
+  "type": "object",
+  "required": ["question_id", "review_status", "reviewer", "notes", "review_snapshot_hash"],
+  "properties": {
+    "question_id": {"type": "string", "pattern": "^CHIS_[0-9]{6}$"},
+    "review_status": {"enum": ["pending", "approved", "needs_revision", "rejected"]},
+    "reviewer": {"type": "string"},
+    "notes": {"type": "string"},
+    "review_snapshot_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": true
+}

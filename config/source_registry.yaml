@@ -1,0 +1,38 @@
+version: 1
+
+defaults:
+  request_interval_min_seconds: 2.0
+  request_interval_max_seconds: 5.0
+  concurrency: 1
+  max_retries: 3
+  timeout_seconds: 30.0
+  user_agent: "CHisEval/0.1 (+https://github.com/AxiomMind/educational_benchmark)"
+
+# No real source is approved yet. Add a source only after its URL, access rules,
+# robots policy, terms, and licence evidence have been reviewed. Template:
+#
+# - source_id: <stable_id>
+#   site_name: <display name>
+#   base_url: <https URL>
+#   source_type: html  # html | pdf | mixed
+#   exam_type: <exam type>
+#   has_answer: true
+#   year_range: <for example 2018-2025>
+#   estimated_questions: null
+#   login_required: false
+#   robots_checked: false
+#   terms_checked: false
+#   license_status: unknown  # allowed | research_only | unknown | restricted
+#   redistribution_allowed: false
+#   collector: <name>
+#   status: draft  # draft | pending_review | approved | disabled | rejected
+#   notes: ""
+#   adapter: ""
+#   start_urls: []
+#   allowed_domains: []
+#   approved_by: ""
+#   approved_at: ""
+#   terms_url: ""
+#   license_evidence: ""
+#   robots_checked_at: ""
+sources: []

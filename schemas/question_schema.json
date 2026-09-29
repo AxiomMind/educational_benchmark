@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/chis-eval/question_schema.json",
+  "title": "CHisEval Question Record V0.1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "record_version",
+    "question_id",
+    "group_id",
+    "shared_material",
+    "raw_question",
+    "normalized_question",
+    "question",
+    "raw_options",
+    "options",
+    "answer",
+    "answer_explanation",
+    "answer_evidence",
+    "has_image",
+    "image_paths",
+    "source",
+    "source_records",
+    "labels",
+    "quality",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "record_version": {"type": "integer", "minimum": 1},
+    "question_id": {"type": "string", "pattern": "^CHIS_[0-9]{6}$"},
+    "group_id": {"type": "string", "pattern": "^GROUP_[A-Za-z0-9_-]+$"},
+    "shared_material": {"type": "string"},
+    "raw_question": {"type": "string"},
+    "normalized_question": {"type": "string"},
+    "question": {"type": "string"},
+    "raw_options": {"$ref": "#/$defs/options"},
+    "options": {"$ref": "#/$defs/options"},
+    "answer": {"type": "string", "enum": ["", "A", "B", "C", "D"]},
+    "answer_explanation": {"type": "string"},
+    "answer_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "answer"],
+        "properties": {
+          "source_id": {"type": "string"},
+          "answer": {"enum": ["A", "B", "C", "D"]},
+          "official": {"type": "boolean"},
+          "reliable": {"type": "boolean"},
+          "evidence_url": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "has_image": {"type": "boolean"},
+    "image_paths": {"type": "array", "items": {"type": "string"}},
+    "source": {"$ref": "#/$defs/source"},
+    "source_records": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "labels": {
+      "type": "object",
+      "required": ["primary_ability", "history_scope", "historical_period", "knowledge_point", "material_type"],
+      "properties": {
+        "primary_ability": {"type": "string"},
+        "history_scope": {"type": "string"},
+        "historical_period": {"type": "string"},
+        "knowledge_point": {"type": "string"},
+        "material_type": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object",
+      "required": ["answer_status", "duplicate_status", "parse_status", "review_status", "image_dependency", "issues", "collector", "reviewer", "notes"],
+      "properties": {
+        "answer_status": {"enum": ["unchecked", "verified", "single_source", "conflict", "missing", "invalid"]},
+        "duplicate_status": {"enum": ["unchecked", "unique", "exact_duplicate", "reordered_duplicate", "suspected_duplicate"]},
+        "parse_status": {"enum": ["pending", "parsed", "valid", "needs_review", "failed"]},
+        "review_status": {"enum": ["pending", "approved", "needs_revision", "rejected"]},
+        "image_dependency": {"enum": ["unknown", "not_image_dependent", "image_dependent", "needs_review"]},
+        "issues": {"type": "array", "items": {"type": "object"}},
+        "collector": {"type": "string"},
+        "reviewer": {"type": "string"},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["raw_file", "content_hash", "ordered_hash", "permutation_hash", "crawler_version", "license_status", "normalization_changes"],
+      "properties": {
+        "raw_file": {"type": "string"},
+        "content_hash": {"type": "string"},
+        "ordered_hash": {"type": "string"},
+        "permutation_hash": {"type": "string"},
+        "crawler_version": {"const": "v0.1"},
+        "license_status": {"enum": ["allowed", "research_only", "unknown", "restricted"]},
+        "normalization_changes": {"type": "array", "items": {"type": "object"}},
+        "ocr_confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "options": {
+      "type": "object",
+      "required": ["A", "B", "C", "D"],
+      "properties": {
+        "A": {"type": "string"},
+        "B": {"type": "string"},
+        "C": {"type": "string"},
+        "D": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_id", "site_name", "url", "paper_title", "year", "province", "exam_type", "page_number", "retrieved_at"],
+      "properties": {
+        "source_id": {"type": "string"},
+        "site_name": {"type": "string"},
+        "url": {"type": "string"},
+        "paper_title": {"type": "string"},
+        "year": {"type": ["integer", "null"]},
+        "province": {"type": "string"},
+        "exam_type": {"type": "string"},
+        "page_number": {"type": ["integer", "null"]},
+        "retrieved_at": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
