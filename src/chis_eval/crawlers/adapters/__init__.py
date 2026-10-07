@@ -50,3 +50,20 @@ def get_adapter(name: str, source: SourceEntry) -> BaseAdapter:
     except KeyError as exc:
         raise AdapterNotFoundError(f"Adapter is not implemented: {name}") from exc
     return adapter_class(source)
+
+
+# Automatically load built-in site adapters
+from .gaokao_bench import GaokaoBenchAdapter
+from .agieval import AgiEvalAdapter
+from .gaokao_mm import GaokaoMmAdapter
+from .zujuan import ZujuanAdapter
+
+__all__ = [
+    "BaseAdapter",
+    "register_adapter",
+    "get_adapter",
+    "GaokaoBenchAdapter",
+    "AgiEvalAdapter",
+    "GaokaoMmAdapter",
+    "ZujuanAdapter",
+]
