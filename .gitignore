@@ -9,7 +9,6 @@ dist/
 build/
 
 # Runtime outputs. Real exam material must not be committed by default.
-*_BATCH_*/
 data/xkw_cookies.json
 data/*.log
 *.db

@@ -1,0 +1,84 @@
+version: 1
+defaults:
+  request_interval_min_seconds: 2.0
+  request_interval_max_seconds: 5.0
+  concurrency: 1
+  max_retries: 3
+  timeout_seconds: 30.0
+  user_agent: "CHisEval/0.1 (+https://github.com/AxiomMind/educational_benchmark)"
+
+sources:
+  - source_id: "GAOKAO_BENCH"
+    site_name: "OpenLMLab GAOKAO-Bench"
+    base_url: "https://github.com/OpenLMLab/GAOKAO-Bench"
+    source_type: "html"
+    exam_type: "高考真题"
+    has_answer: true
+    year_range: "2010-2022"
+    estimated_questions: 287
+    login_required: false
+    robots_checked: true
+    terms_checked: true
+    license_status: "research_only"
+    redistribution_allowed: false
+    collector: "Eric10Z4"
+    status: "approved"
+    notes: "上海人工智能实验室 OpenLMLab 高考客观题评测基准"
+    adapter: "gaokao_bench_adapter"
+    start_urls: ["https://raw.githubusercontent.com/OpenLMLab/GAOKAO-Bench/main/Data/Objective_Questions/2010-2022_History_MCQs.json"]
+    allowed_domains: ["raw.githubusercontent.com", "github.com"]
+    approved_by: "Eric10Z4"
+    approved_at: "2026-10-07T14:57:36.848456+08:00"
+    terms_url: "https://github.com/OpenLMLab/GAOKAO-Bench/blob/main/LICENSE"
+    license_evidence: "Apache-2.0 / Open Research"
+    robots_checked_at: "2026-10-07T14:57:36.848456+08:00"
+
+  - source_id: "AGIEVAL_GAOKAO"
+    site_name: "Microsoft Research AGIEval"
+    base_url: "https://github.com/ruixiangcui/AGIEval"
+    source_type: "html"
+    exam_type: "高考真题"
+    has_answer: true
+    year_range: "2010-2021"
+    estimated_questions: 235
+    login_required: false
+    robots_checked: true
+    terms_checked: true
+    license_status: "research_only"
+    redistribution_allowed: false
+    collector: "Eric10Z4"
+    status: "approved"
+    notes: "微软研究院 AGIEval 高考客观选择题子集"
+    adapter: "agieval_adapter"
+    start_urls: ["https://raw.githubusercontent.com/ruixiangcui/AGIEval/main/data/v1/gaokao-history.jsonl"]
+    allowed_domains: ["raw.githubusercontent.com", "github.com"]
+    approved_by: "Eric10Z4"
+    approved_at: "2026-10-07T14:57:36.848456+08:00"
+    terms_url: "https://github.com/ruixiangcui/AGIEval/blob/main/LICENSE"
+    license_evidence: "MIT License / Open Research"
+    robots_checked_at: "2026-10-07T14:57:36.848456+08:00"
+
+  - source_id: "GAOKAO_MM"
+    site_name: "OpenMOSS GAOKAO-MM"
+    base_url: "https://github.com/OpenMOSS/GAOKAO-MM"
+    source_type: "mixed"
+    exam_type: "高考真题"
+    has_answer: true
+    year_range: "2010-2023"
+    estimated_questions: 34
+    login_required: false
+    robots_checked: true
+    terms_checked: true
+    license_status: "research_only"
+    redistribution_allowed: false
+    collector: "Eric10Z4"
+    status: "approved"
+    notes: "复旦大学 MOSS 团队多模态评测基准（历史地图/漫画）"
+    adapter: "gaokao_mm_adapter"
+    start_urls: ["https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs.json"]
+    allowed_domains: ["raw.githubusercontent.com", "github.com"]
+    approved_by: "Eric10Z4"
+    approved_at: "2026-10-07T14:57:36.848456+08:00"
+    terms_url: "https://github.com/OpenMOSS/GAOKAO-MM/blob/main/LICENSE"
+    license_evidence: "MIT License / Research Only"
+    robots_checked_at: "2026-10-07T14:57:36.848456+08:00"

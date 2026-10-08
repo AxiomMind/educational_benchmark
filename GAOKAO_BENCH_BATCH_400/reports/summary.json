@@ -1,0 +1,48 @@
+{
+  "answer_statuses": {
+    "verified": 400
+  },
+  "by_source": {
+    "AGIEVAL_GAOKAO": 107,
+    "GAOKAO_BENCH": 260,
+    "GAOKAO_MM": 33
+  },
+  "by_year": {
+    "2006": 11,
+    "2007": 23,
+    "2008": 22,
+    "2010": 26,
+    "2011": 2,
+    "2012": 6,
+    "2013": 22,
+    "2014": 23,
+    "2015": 49,
+    "2016": 32,
+    "2017": 34,
+    "2018": 34,
+    "2019": 32,
+    "2020": 36,
+    "2021": 23,
+    "2022": 23,
+    "2023": 2
+  },
+  "duplicate_statuses": {
+    "unique": 400
+  },
+  "exact_duplicate": 0,
+  "image_dependent": 25,
+  "missing_answer": 0,
+  "needs_human_review": 400,
+  "parse_failed": 0,
+  "parse_statuses": {
+    "valid": 400
+  },
+  "qualified": 0,
+  "rejection_reasons": {},
+  "review_statuses": {
+    "pending": 400
+  },
+  "suspected_duplicate": 0,
+  "total": 400,
+  "verified_answer": 400
+}

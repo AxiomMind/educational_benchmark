@@ -1,0 +1,33 @@
+{
+  "answer_statuses": {
+    "verified": 20
+  },
+  "by_source": {
+    "GAOKAO_BENCH": 16,
+    "GAOKAO_MM": 4
+  },
+  "by_year": {
+    "2021": 2,
+    "2022": 16,
+    "2023": 2
+  },
+  "duplicate_statuses": {
+    "unique": 20
+  },
+  "exact_duplicate": 0,
+  "image_dependent": 1,
+  "missing_answer": 0,
+  "needs_human_review": 20,
+  "parse_failed": 0,
+  "parse_statuses": {
+    "valid": 20
+  },
+  "qualified": 0,
+  "rejection_reasons": {},
+  "review_statuses": {
+    "pending": 20
+  },
+  "suspected_duplicate": 0,
+  "total": 20,
+  "verified_answer": 20
+}
