@@ -101,6 +101,51 @@ class ZujuanAdapter(BaseAdapter):
 
         return results
 
+    def _extract_item_year(self, info_div) -> tuple[int | None, str]:
+        if not info_div:
+            return None, ""
+        info_text = info_div.get_text(strip=True)
+        if not info_text or "该试题已被下架" in info_text:
+            return None, ""
+
+        m_gk = re.findall(r"(20[12]\d)年(?:[0-9一二三四五六七八九十月]+)?(?:[^\s\|]+)?高考", info_text)
+        if m_gk:
+            y = int(m_gk[0])
+            return min(y, 2026), f"历年高考统考真题({y}年)"
+
+        cit_part = info_text.split("引用：", 1)[-1] if "引用：" in info_text else info_text
+        exam_tokens = re.split(r"(?<=[卷题练测考])", cit_part)
+        valid_exams = [e.strip() for e in exam_tokens if any(yr in e for yr in ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "201"])]
+        target_exam = valid_exams[0] if valid_exams else cit_part
+
+        m_ay = re.search(r"(20[12]\d)[-—至]20(\d\d)学年", target_exam)
+        if m_ay:
+            y_start = int(m_ay.group(1))
+            y_end = int("20" + m_ay.group(2))
+            if y_start >= 2026:
+                return 2026, f"名校考卷引用：{target_exam[:45]}"
+            if any(term in target_exam for term in ["下学期", "第二学期", "期末", "春季", "3月", "4月", "5月", "6月", "7月"]):
+                return min(y_end, 2026), f"名校考卷引用：{target_exam[:45]}"
+            else:
+                return min(y_start, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+        m_grad = re.search(r"(20[12]\d)届", target_exam)
+        if m_grad:
+            g_yr = int(m_grad.group(1))
+            return 2026 if g_yr >= 2027 else min(g_yr, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+        m_yr = re.search(r"(20[12]\d)年", target_exam)
+        if m_yr:
+            y = int(m_yr.group(1))
+            return min(y, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+        m_up = re.search(r"(20[12]\d)/\d{2}/\d{2}", info_text)
+        if m_up:
+            y = int(m_up.group(1))
+            return min(y, 2026), f"题库系统录入时间({m_up.group(0)})"
+
+        return None, ""
+
     def parse_file(self, path: Path, metadata: dict[str, Any]) -> list[dict[str, Any]]:
         html = path.read_text(encoding="utf-8", errors="ignore")
         soup = BeautifulSoup(html, "html.parser")
@@ -155,6 +200,11 @@ class ZujuanAdapter(BaseAdapter):
                     clean_name = Path(src.split("?")[0]).name
                     image_paths.append(f"assets/zujuan_{source_qid}_{clean_name}")
 
+            # Determine year from paper title or individual question citation (Scheme A)
+            item_info = qd.find("div", class_="exam-item__info")
+            item_year, item_reason = self._extract_item_year(item_info)
+            final_year = year_val or item_year
+
             has_image = bool(image_paths)
             if has_image:
                 is_dep = any(k in q_clean for k in ["图", "表", "漫画", "地图", "下表", "下图", "如图"])
@@ -163,6 +213,9 @@ class ZujuanAdapter(BaseAdapter):
             else:
                 image_dependency = "not_image_dependent"
                 notes = f"试卷出处: {paper_title} (题号: {source_qid})"
+
+            if item_reason:
+                notes += f"；真实年份溯源自{item_reason}"
 
             qid = f"CHIS_{paper_id}_{local_index:03d}"
             # Ensure valid format for question_id if required by schema, otherwise CHIS_000000
@@ -177,7 +230,7 @@ class ZujuanAdapter(BaseAdapter):
                 "shared_material": "",
                 "raw_question": q_clean,
                 "normalized_question": q_clean,
-                "question": q_clean,
+                "question": clean_q if "clean_q" in locals() and clean_q != q_clean else q_clean,
                 "raw_options": opts,
                 "options": opts,
                 "answer": "",
@@ -190,7 +243,7 @@ class ZujuanAdapter(BaseAdapter):
                     "site_name": self.source.site_name,
                     "url": page_url,
                     "paper_title": paper_title,
-                    "year": year_val,
+                    "year": final_year,
                     "province": province_val,
                     "exam_type": "阶段练习与模拟考",
                     "page_number": None,
@@ -202,7 +255,7 @@ class ZujuanAdapter(BaseAdapter):
                         "site_name": self.source.site_name,
                         "url": page_url,
                         "paper_title": paper_title,
-                        "year": year_val,
+                        "year": final_year,
                         "province": province_val,
                         "exam_type": "阶段练习与模拟考",
                         "page_number": None,

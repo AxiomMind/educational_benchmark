@@ -70,6 +70,51 @@ def parse_mcq_div(cnt):
             return q, opts
     return None
 
+def extract_item_year(info_div) -> tuple[int | None, str]:
+    if not info_div:
+        return None, ""
+    info_text = info_div.get_text(strip=True)
+    if not info_text or "该试题已被下架" in info_text:
+        return None, ""
+
+    m_gk = re.findall(r"(20[12]\d)年(?:[0-9一二三四五六七八九十月]+)?(?:[^\s\|]+)?高考", info_text)
+    if m_gk:
+        y = int(m_gk[0])
+        return min(y, 2026), f"历年高考统考真题({y}年)"
+
+    cit_part = info_text.split("引用：", 1)[-1] if "引用：" in info_text else info_text
+    exam_tokens = re.split(r"(?<=[卷题练测考])", cit_part)
+    valid_exams = [e.strip() for e in exam_tokens if any(yr in e for yr in ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "201"])]
+    target_exam = valid_exams[0] if valid_exams else cit_part
+
+    m_ay = re.search(r"(20[12]\d)[-—至]20(\d\d)学年", target_exam)
+    if m_ay:
+        y_start = int(m_ay.group(1))
+        y_end = int("20" + m_ay.group(2))
+        if y_start >= 2026:
+            return 2026, f"名校考卷引用：{target_exam[:45]}"
+        if any(term in target_exam for term in ["下学期", "第二学期", "期末", "春季", "3月", "4月", "5月", "6月", "7月"]):
+            return min(y_end, 2026), f"名校考卷引用：{target_exam[:45]}"
+        else:
+            return min(y_start, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+    m_grad = re.search(r"(20[12]\d)届", target_exam)
+    if m_grad:
+        g_yr = int(m_grad.group(1))
+        return 2026 if g_yr >= 2027 else min(g_yr, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+    m_yr = re.search(r"(20[12]\d)年", target_exam)
+    if m_yr:
+        y = int(m_yr.group(1))
+        return min(y, 2026), f"名校考卷引用：{target_exam[:45]}"
+
+    m_up = re.search(r"(20[12]\d)/\d{2}/\d{2}", info_text)
+    if m_up:
+        y = int(m_up.group(1))
+        return min(y, 2026), f"题库系统录入时间({m_up.group(0)})"
+
+    return None, ""
+
 for hpath in html_files:
     html_text = hpath.read_text(encoding='utf-8', errors='ignore')
     soup = BeautifulSoup(html_text, 'html.parser')
@@ -79,7 +124,7 @@ for hpath in html_files:
     raw_title = title_tag.get_text(strip=True) if title_tag else '高中历史试题'
     paper_title = re.sub(r'-组卷网.*$', '', raw_title).strip()
 
-    # 真实年份提取：如果没有显式年份，设为 None (修复 1930 题年份污染)
+    # 真实年份提取
     year_m = re.search(r'(19\d\d|20\d\d)', paper_title)
     year_val = int(year_m.group(1)) if year_m else None
 
@@ -107,6 +152,11 @@ for hpath in html_files:
             continue
         q_clean, opts = res
 
+        # 题目级年份真实溯源 (Scheme A)
+        item_info = qd.find('div', class_='exam-item__info')
+        item_yr, item_reason = extract_item_year(item_info)
+        final_yr = year_val or item_yr
+
         # 检查图片
         imgs = cnt.find_all('img')
         img_filenames = []
@@ -120,7 +170,8 @@ for hpath in html_files:
 
         zujuan_parsed_index[qid_num] = {
             'paper_title': paper_title,
-            'year': year_val,
+            'year': final_yr,
+            'year_reason': item_reason,
             'province': province_val,
             'question': q_clean,
             'options': opts,
@@ -208,6 +259,9 @@ for rec in records_4000:
                 rec['image_paths'] = []
                 rec['quality']['image_dependency'] = "not_image_dependent"
                 rec['quality']['notes'] = f"试卷出处: {parsed_info['paper_title']} (题号: {sqn})"
+
+            if parsed_info.get('year_reason'):
+                rec['quality']['notes'] += f"；真实年份溯源自{parsed_info['year_reason']}"
 
             # 4. 答案与证据规范
             rec['answer'] = ""
