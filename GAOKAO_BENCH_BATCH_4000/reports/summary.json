@@ -1,7 +1,7 @@
 {
   "answer_statuses": {
     "missing": 3600,
-    "verified": 400
+    "single_source": 400
   },
   "by_source": {
     "AGIEVAL_GAOKAO": 107,
@@ -27,15 +27,15 @@
     "2021": 23,
     "2022": 23,
     "2023": 2,
-    "2024": 1930,
     "2025": 562,
-    "2026": 1108
+    "2026": 1108,
+    "unknown": 1930
   },
   "duplicate_statuses": {
     "unique": 4000
   },
   "exact_duplicate": 0,
-  "image_dependent": 25,
+  "image_dependent": 301,
   "missing_answer": 3600,
   "needs_human_review": 4000,
   "parse_failed": 0,
@@ -49,5 +49,5 @@
   },
   "suspected_duplicate": 0,
   "total": 4000,
-  "verified_answer": 400
+  "verified_answer": 0
 }

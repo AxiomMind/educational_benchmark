@@ -109,8 +109,8 @@ class ZujuanAdapter(BaseAdapter):
         raw_title = title_tag.get_text(strip=True) if title_tag else "高中历史试题"
         paper_title = re.sub(r"-组卷网.*$", "", raw_title).strip()
 
-        year_m = re.search(r"(202\d|201\d)", paper_title)
-        year_val = int(year_m.group(1)) if year_m else 2024
+        year_m = re.search(r"(19\d\d|20\d\d)", paper_title)
+        year_val = int(year_m.group(1)) if year_m else None
 
         province_val = "全国"
         provinces = [
@@ -135,7 +135,9 @@ class ZujuanAdapter(BaseAdapter):
         ques_divs = soup.find_all("div", class_=re.compile(r"quesdiv"))
 
         for local_index, qd in enumerate(ques_divs, start=1):
-            res = self._parse_mcq_div(qd)
+            cnt = qd.find("div", class_="exam-item__cnt")
+            target_el = cnt if cnt else qd
+            res = self._parse_mcq_div(target_el)
             if not res:
                 continue
             q_clean, opts = res
@@ -143,6 +145,24 @@ class ZujuanAdapter(BaseAdapter):
             div_id = qd.get("id", "")
             source_qid_match = re.search(r"\d+", div_id)
             source_qid = source_qid_match.group(0) if source_qid_match else str(local_index)
+
+            # Check for images in question content
+            imgs = target_el.find_all("img")
+            image_paths = []
+            for img in imgs:
+                src = img.get("src")
+                if src and src.startswith("http"):
+                    clean_name = Path(src.split("?")[0]).name
+                    image_paths.append(f"assets/zujuan_{source_qid}_{clean_name}")
+
+            has_image = bool(image_paths)
+            if has_image:
+                is_dep = any(k in q_clean for k in ["图", "表", "漫画", "地图", "下表", "下图", "如图"])
+                image_dependency = "image_dependent" if is_dep else "needs_review"
+                notes = f"试卷出处: {paper_title} (题号: {source_qid})；包含正文图片"
+            else:
+                image_dependency = "not_image_dependent"
+                notes = f"试卷出处: {paper_title} (题号: {source_qid})"
 
             qid = f"CHIS_{paper_id}_{local_index:03d}"
             # Ensure valid format for question_id if required by schema, otherwise CHIS_000000
@@ -163,8 +183,8 @@ class ZujuanAdapter(BaseAdapter):
                 "answer": "",
                 "answer_explanation": "",
                 "answer_evidence": [],
-                "has_image": False,
-                "image_paths": [],
+                "has_image": has_image,
+                "image_paths": image_paths,
                 "source": {
                     "source_id": self.source.source_id,
                     "site_name": self.source.site_name,
@@ -201,11 +221,11 @@ class ZujuanAdapter(BaseAdapter):
                     "duplicate_status": "unique",
                     "parse_status": "parsed",
                     "review_status": "pending",
-                    "image_dependency": "not_image_dependent",
+                    "image_dependency": image_dependency,
                     "issues": [],
                     "collector": self.source.collector or "collector_01",
                     "reviewer": "",
-                    "notes": f"试卷出处: {paper_title} (题号: {source_qid})",
+                    "notes": notes,
                 },
                 "provenance": {
                     "raw_file": raw_file_rel,
@@ -224,7 +244,9 @@ class ZujuanAdapter(BaseAdapter):
 
     @staticmethod
     def _parse_mcq_div(div: Any) -> tuple[str, dict[str, str]] | None:
-        txt = div.get_text("\n", strip=True)
+        cnt = div.find("div", class_="exam-item__cnt") if hasattr(div, "find") else None
+        target = cnt if cnt else div
+        txt = target.get_text("\n", strip=True)
         parts = re.split(r"(?=[A-D][\.\、\．])", txt)
         if len(parts) < 5:
             return None

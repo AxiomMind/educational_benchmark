@@ -1,133 +1,55 @@
 import os
 import sys
 import json
-import hashlib
 import re
-import time
-import subprocess
-from datetime import datetime, timezone
-import httpx
+import urllib.request
+from pathlib import Path
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 
-REPO_DIR = 'C:/Users/26730/educational_benchmark'
-BATCH_DIR = os.path.join(REPO_DIR, 'GAOKAO_BENCH_BATCH_4000')
-RAW_DIR = os.path.join(BATCH_DIR, 'raw')
-ASSETS_DIR = os.path.join(BATCH_DIR, 'assets')
-MANIFESTS_DIR = os.path.join(BATCH_DIR, 'manifests')
-REPORTS_DIR = os.path.join(BATCH_DIR, 'reports')
+sys.path.insert(0, 'src')
+from chis_eval.pipeline.normalize import ordered_hash, permutation_hash
+from chis_eval.pipeline.validate import validate_records
+from chis_eval.pipeline.report import build_quality_report, write_quality_report
+from chis_eval.pipeline.review import export_review_csv
 
-os.makedirs(RAW_DIR, exist_ok=True)
-os.makedirs(ASSETS_DIR, exist_ok=True)
-os.makedirs(MANIFESTS_DIR, exist_ok=True)
-os.makedirs(REPORTS_DIR, exist_ok=True)
+REPO_DIR = Path('C:/Users/26730/educational_benchmark')
 
-now_iso = datetime.now(timezone.utc).astimezone().isoformat()
+print('=== 开始根据初步审查报告进行数据与爬虫全面修复 ===')
 
-# 1. 确保持有最新鲜的反爬 Cookie
-def refresh_cookies():
-    print('>>> 正在通过底层驱动刷新组卷网反爬 Token...')
-    js_script = 'C:/Users/26730/AppData/Local/hermes/cache/scratch/get_fresh_cookie.js'
-    env = os.environ.copy()
-    env['NODE_PATH'] = 'C:/Users/26730/AppData/Local/hermes/skills/anti-bot-scraper/node_modules'
-    subprocess.run(['node', js_script], env=env, capture_output=True)
+# ==============================================================================
+# 1. 修复 GAOKAO-MM 多模态上游全部图片资源
+# ==============================================================================
+print('\n[1/5] 检查并补全 GAOKAO-MM 全部多模态图片资源...')
+mm_raw_json = REPO_DIR / 'GAOKAO_BENCH_BATCH_4000/raw/gaokao_mm_history.json'
+with mm_raw_json.open('r', encoding='utf-8') as f:
+    mm_upstream_data = json.load(f).get('example', [])
 
-refresh_cookies()
+mm_img_base = 'https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs/'
+mm_items_by_index = {}
+for it in mm_upstream_data:
+    mm_items_by_index[str(it.get('index'))] = it
 
-cookie_file = 'C:/Users/26730/AppData/Local/hermes/cache/scratch/fresh_cookies.json'
-with open(cookie_file, 'r', encoding='utf-8') as f:
-    cookies = {c['name']: c['value'] for c in json.load(f)}
+# ==============================================================================
+# 2. 预解析所有本地已保存的组卷网 HTML (一次遍历，建立索引)
+# ==============================================================================
+print('\n[2/5] 预解析本地组卷网 HTML 页面，建立纯净题干、选项与图片索引...')
+html_files = list((REPO_DIR / 'GAOKAO_BENCH_BATCH_4000/raw').glob('zujuan_paper_*.html'))
+print(f'共扫描到 {len(html_files)} 份组卷网试卷原件 HTML。')
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-    'Referer': 'https://zujuan.xkw.com/gzls/'
-}
-client = httpx.Client(cookies=cookies, headers=headers, timeout=12.0)
+zujuan_parsed_index = {} # qid_num -> dict of clean data
+download_tasks = []      # (url, filename)
 
-# 2. 载入前 400 道权威真题基准（带 100% 官方答案与逐项解析）
-batch_400_jsonl = os.path.join(REPO_DIR, 'GAOKAO_BENCH_BATCH_400', 'questions.jsonl')
-questions_all = []
-seen_signatures = set()
+def clean_question_str(q):
+    return re.sub(r'^\d+[\.\、\．\s]*(（[^）]+）|\([^\)]+\))?\s*', '', q).strip()
 
-def clean_sig(text):
-    return re.sub(r'[\s\W_]+', '', text)[:30]
-
-if os.path.exists(batch_400_jsonl):
-    with open(batch_400_jsonl, 'r', encoding='utf-8') as f:
-        for line in f:
-            if line.strip():
-                item = json.loads(line)
-                questions_all.append(item)
-                seen_signatures.add(clean_sig(item.get('question', '')))
-
-print(f'>>> 已成功载入前 400 道高标准真题基准（带 100% 官方答案与解析）')
-
-# 复制原件和多模态素材
-src_raw_400 = os.path.join(REPO_DIR, 'GAOKAO_BENCH_BATCH_400', 'raw')
-src_assets_400 = os.path.join(REPO_DIR, 'GAOKAO_BENCH_BATCH_400', 'assets')
-
-import shutil
-for f_name in os.listdir(src_raw_400):
-    shutil.copyfile(os.path.join(src_raw_400, f_name), os.path.join(RAW_DIR, f_name))
-for f_name in os.listdir(src_assets_400):
-    shutil.copyfile(os.path.join(src_assets_400, f_name), os.path.join(ASSETS_DIR, f_name))
-
-manifest_records = []
-with open(os.path.join(REPO_DIR, 'GAOKAO_BENCH_BATCH_400', 'manifests', 'raw_files.jsonl'), 'r', encoding='utf-8') as f:
-    for line in f:
-        if line.strip():
-            manifest_records.append(json.loads(line))
-
-# 3. 抓取多教材模块的试卷列表
-categories = [
-    ('https://zujuan.xkw.com/gzls/shijuan/tbjx/zj136098/p{}/', 30), # 必修上
-    ('https://zujuan.xkw.com/gzls/shijuan/tbjx/zj149285/p{}/', 30), # 必修下
-    ('https://zujuan.xkw.com/gzls/shijuan/tbjx/zj164717/p{}/', 25), # 选必1
-    ('https://zujuan.xkw.com/gzls/shijuan/tbjx/zj164718/p{}/', 25), # 选必2
-    ('https://zujuan.xkw.com/gzls/shijuan/tbjx/zj164719/p{}/', 25), # 选必3
-    ('https://zujuan.xkw.com/gzls/shijuan/p{}/', 30),                # 综合试卷
-]
-
-paper_urls = []
-seen_paper_ids = set()
-
-print('>>> 正在遍历试卷库索引列表...')
-for cat_tmpl, max_p in categories:
-    if len(paper_urls) >= 500:
-        break
-    for p_num in range(1, max_p + 1):
-        if len(paper_urls) >= 500:
-            break
-        u = cat_tmpl.format(p_num)
-        try:
-            r = client.get(u)
-            if r.status_code == 200 and '17p' in r.text:
-                soup = BeautifulSoup(r.text, 'html.parser')
-                links = soup.find_all('a', href=re.compile(r'/17p\d+\.html'))
-                for l in links:
-                    href = l.get('href')
-                    pid_match = re.search(r'/17p(\d+)\.html', href)
-                    if pid_match:
-                        pid = pid_match.group(1)
-                        if pid not in seen_paper_ids:
-                            seen_paper_ids.add(pid)
-                            full_url = f"https://zujuan.xkw.com/17p{pid}.html"
-                            title = l.get('title') or l.get_text(strip=True)
-                            paper_urls.append((pid, full_url, title))
-            time.sleep(0.1)
-        except Exception:
-            pass
-
-print(f'>>> 成功收集到 {len(paper_urls)} 份高中历史试卷！开始多线程高效提取试题...')
-
-# 4. 解析单选题函数
-def parse_mcq_div(div):
-    txt = div.get_text('\n', strip=True)
+def parse_mcq_div(cnt):
+    txt = cnt.get_text('\n', strip=True)
     parts = re.split(r'(?=[A-D][\.\、\．])', txt)
     if len(parts) < 5:
         return None
     q = parts[0].strip()
-    q = re.sub(r'^\d+[\.\、\．\s]*(（[^）]+）|\([^\)]+\))?\s*', '', q).strip()
+    q = clean_question_str(q)
     opts = {}
     for p in parts[1:]:
         p = p.strip()
@@ -148,290 +70,240 @@ def parse_mcq_div(div):
             return q, opts
     return None
 
-def fetch_single_paper(paper_info):
-    pid, p_url, p_title = paper_info
-    try:
-        res = client.get(p_url)
-        if res.status_code == 200 and 'quesdiv' in res.text:
-            return pid, p_url, p_title, res.text
-    except Exception:
-        pass
-    return pid, p_url, p_title, None
+for hpath in html_files:
+    html_text = hpath.read_text(encoding='utf-8', errors='ignore')
+    soup = BeautifulSoup(html_text, 'html.parser')
 
-current_qid = len(questions_all) + 1
-downloaded_count = 0
+    # 提取真实标题
+    title_tag = soup.find('h1') or soup.find('title')
+    raw_title = title_tag.get_text(strip=True) if title_tag else '高中历史试题'
+    paper_title = re.sub(r'-组卷网.*$', '', raw_title).strip()
 
-with ThreadPoolExecutor(max_workers=6) as executor:
-    futures = [executor.submit(fetch_single_paper, p_info) for p_info in paper_urls]
-    for fut in futures:
-        if len(questions_all) >= 4000:
+    # 真实年份提取：如果没有显式年份，设为 None (修复 1930 题年份污染)
+    year_m = re.search(r'(19\d\d|20\d\d)', paper_title)
+    year_val = int(year_m.group(1)) if year_m else None
+
+    # 省份提取
+    province_val = "全国"
+    provinces = [
+        "北京", "上海", "天津", "重庆", "河北", "山西", "辽宁", "吉林", "黑龙江",
+        "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南",
+        "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃",
+    ]
+    for prov in provinces:
+        if prov in paper_title:
+            province_val = prov
             break
-        pid, p_url, p_title, html = fut.result()
-        if not html:
+
+    # 解析每个 quesdiv
+    for qd in soup.find_all('div', id=lambda x: x and x.startswith('quesdiv')):
+        qid_num = qd.get('id', '')[7:] # strip 'quesdiv'
+        cnt = qd.find('div', class_='exam-item__cnt')
+        if not cnt:
             continue
 
-        raw_filename = f"zujuan_paper_{pid}.html"
-        raw_filepath = os.path.join(RAW_DIR, raw_filename)
-        html_bytes = html.encode('utf-8')
-        with open(raw_filepath, 'wb') as f:
-            f.write(html_bytes)
-        h = hashlib.sha256(html_bytes).hexdigest()
+        res = parse_mcq_div(cnt)
+        if not res:
+            continue
+        q_clean, opts = res
 
-        manifest_records.append({
-            "source_id": "ZUJUAN_XKW",
-            "url": p_url,
-            "raw_file": f"raw/{raw_filename}",
-            "retrieved_at": now_iso,
-            "http_status": 200,
-            "content_type": "text/html",
-            "content_hash": h,
-            "collector": "Eric10Z4"
-        })
+        # 检查图片
+        imgs = cnt.find_all('img')
+        img_filenames = []
+        for img in imgs:
+            src = img.get('src')
+            if src and src.startswith('http'):
+                clean_url = src.split('?')[0]
+                fn = f"zujuan_{qid_num}_{Path(clean_url).name}"
+                img_filenames.append((src, fn))
+                download_tasks.append((src, fn))
 
-        soup = BeautifulSoup(html, 'html.parser')
-        title_tag = soup.find('h1') or soup.find('title')
-        real_title = title_tag.get_text(strip=True) if title_tag else p_title
-        real_title = re.sub(r'-组卷网.*$', '', real_title).strip()
+        zujuan_parsed_index[qid_num] = {
+            'paper_title': paper_title,
+            'year': year_val,
+            'province': province_val,
+            'question': q_clean,
+            'options': opts,
+            'images': [fn for _, fn in img_filenames]
+        }
 
-        year_match = re.search(r'(202\d|201\d)', real_title)
-        year_val = int(year_match.group(1)) if year_match else 2024
+print(f'预解析完成！有效题目索引量: {len(zujuan_parsed_index)} 条，待下载/核对图片任务: {len(download_tasks)} 个。')
 
-        province_val = "全国"
-        for prov in ["北京", "上海", "天津", "重庆", "河北", "山西", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃"]:
-            if prov in real_title:
-                province_val = prov
-                break
+# 下载组卷网所有图片到 assets
+assets_dir_4000 = REPO_DIR / 'GAOKAO_BENCH_BATCH_4000/assets'
+assets_dir_4000.mkdir(parents=True, exist_ok=True)
 
-        ques_divs = soup.find_all('div', class_=re.compile(r'quesdiv'))
-        local_q_num = 1
-        for qd in ques_divs:
-            if len(questions_all) >= 4000:
-                break
-            res = parse_mcq_div(qd)
-            if not res:
-                continue
-            q_clean, opts = res
-            sig = clean_sig(q_clean)
-            if sig in seen_signatures:
-                continue
-            seen_signatures.add(sig)
+def download_asset(task):
+    url, fn = task
+    dest = assets_dir_4000 / fn
+    if dest.exists():
+        return True
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            data = resp.read()
+        dest.write_bytes(data)
+        return True
+    except Exception:
+        return False
 
-            div_id = qd.get('id', '')
-            source_qid_match = re.search(r'\d+', div_id)
-            source_qid = source_qid_match.group(0) if source_qid_match else str(local_q_num)
+print('正在并发下载并核验试题图片资源...')
+with ThreadPoolExecutor(max_workers=8) as ex:
+    dl_results = list(ex.map(download_asset, download_tasks))
+print(f'图片资源处理完成: 成功率 {sum(1 for r in dl_results if r)} / {len(download_tasks)}')
 
-            qid_str = f"CHIS_{current_qid:06d}"
+# ==============================================================================
+# 3. 修复 GAOKAO_BENCH_BATCH_4000/questions.jsonl
+# ==============================================================================
+print('\n[3/5] 针对 GAOKAO_BENCH_BATCH_4000/questions.jsonl 逐题执行深度清洗与规范重对齐...')
 
-            rec = {
-                "schema_version": "0.1.0",
-                "record_version": 1,
-                "question_id": qid_str,
-                "group_id": f"GROUP_ZUJUAN_{pid}_{local_q_num:03d}",
-                "shared_material": "",
-                "raw_question": q_clean,
-                "normalized_question": q_clean,
-                "question": q_clean,
-                "raw_options": opts,
-                "options": opts,
-                "answer": "",
-                "answer_explanation": "",
-                "answer_evidence": [],
-                "has_image": False,
-                "image_paths": [],
-                "source": {
-                    "source_id": "ZUJUAN_XKW",
-                    "site_name": "学科网组卷网",
-                    "url": p_url,
-                    "paper_title": real_title,
-                    "year": year_val,
-                    "province": province_val,
-                    "exam_type": "阶段练习与模拟考",
-                    "page_number": None,
-                    "retrieved_at": now_iso
-                },
-                "source_records": [
-                    {
-                        "source_id": "ZUJUAN_XKW",
-                        "site_name": "学科网组卷网",
-                        "url": p_url,
-                        "paper_title": real_title,
-                        "year": year_val,
-                        "province": province_val,
-                        "exam_type": "阶段练习与模拟考",
-                        "page_number": None,
-                        "retrieved_at": now_iso
-                    }
-                ],
-                "labels": {
-                    "primary_ability": "",
-                    "history_scope": "",
-                    "historical_period": "",
-                    "knowledge_point": "",
-                    "material_type": ""
-                },
-                "quality": {
-                    "answer_status": "missing",
-                    "duplicate_status": "unique",
-                    "parse_status": "parsed",
-                    "review_status": "pending",
-                    "image_dependency": "not_image_dependent",
-                    "issues": [],
-                    "collector": "Eric10Z4",
-                    "reviewer": "",
-                    "notes": f"试卷出处: {real_title} (题号: {source_qid})"
-                },
-                "provenance": {
-                    "raw_file": f"raw/{raw_filename}",
-                    "content_hash": h,
-                    "ordered_hash": "",
-                    "permutation_hash": "",
-                    "crawler_version": "v0.1",
-                    "license_status": "research_only",
-                    "normalization_changes": [],
-                    "source_question_number": source_qid
-                }
-            }
-            questions_all.append(rec)
-            current_qid += 1
-            local_q_num += 1
+q_4000_file = REPO_DIR / 'GAOKAO_BENCH_BATCH_4000/questions.jsonl'
+with q_4000_file.open('r', encoding='utf-8') as f:
+    records_4000 = [json.loads(line) for line in f if line.strip()]
 
-        downloaded_count += 1
-        if downloaded_count % 25 == 0:
-            print(f'>>> 已解析 {downloaded_count} 份试卷，当前题目累计: {len(questions_all)} / 4000')
+fixed_d_count = 0
+fixed_year_count = 0
+fixed_img_count = 0
+fixed_evidence_count = 0
 
-# 截断或确认精确 4000 题
-questions_all = questions_all[:4000]
-print(f'\n>>> 🎉 恭喜主人！整整 {len(questions_all)} 道高中历史四选一单选题全部提取完成！')
+for rec in records_4000:
+    source_id = rec['source']['source_id']
 
-# 5. 保存 manifests/raw_files.jsonl
-with open(os.path.join(MANIFESTS_DIR, 'raw_files.jsonl'), 'w', encoding='utf-8') as f:
-    for m in manifest_records:
-        f.write(json.dumps(m, ensure_ascii=False) + '\n')
+    # --- A. 组卷网题 (3,600 道) ---
+    if source_id == 'ZUJUAN_XKW':
+        sqn = rec['provenance']['source_question_number']
+        parsed_info = zujuan_parsed_index.get(sqn)
+        if parsed_info:
+            # 1. 修复 D 选项污染与题干
+            old_d = rec['options'].get('D', '')
+            clean_opts = parsed_info['options']
+            clean_q = parsed_info['question']
+            if old_d != clean_opts['D']:
+                fixed_d_count += 1
 
-# 6. 保存 questions.jsonl
-out_jsonl = os.path.join(BATCH_DIR, 'questions.jsonl')
-with open(out_jsonl, 'w', encoding='utf-8') as f:
-    for q in questions_all:
-        f.write(json.dumps(q, ensure_ascii=False) + '\n')
+            rec['question'] = clean_q
+            rec['normalized_question'] = clean_q
+            rec['raw_question'] = clean_q
+            rec['options'] = clean_opts
+            rec['raw_options'] = clean_opts
 
-print(f'>>> questions.jsonl 保存成功: {out_jsonl}')
+            # 2. 修复年份污染 (无年份依据设为 None)
+            real_year = parsed_info['year']
+            if rec['source']['year'] != real_year:
+                fixed_year_count += 1
+            rec['source']['year'] = real_year
+            rec['source_records'][0]['year'] = real_year
 
-# 7. 写入 source_registry.yaml
-registry_content = f'''version: 1
-defaults:
-  request_interval_min_seconds: 2.0
-  request_interval_max_seconds: 5.0
-  concurrency: 1
-  max_retries: 3
-  timeout_seconds: 30.0
-  user_agent: "CHisEval/0.1 (+https://github.com/AxiomMind/educational_benchmark)"
+            # 3. 修复图片遗漏
+            imgs = parsed_info['images']
+            if imgs:
+                fixed_img_count += 1
+                rec['has_image'] = True
+                rec['image_paths'] = [f"assets/{fn}" for fn in imgs]
+                is_dep = any(k in clean_q for k in ["图", "表", "漫画", "地图", "下表", "下图", "如图"])
+                rec['quality']['image_dependency'] = "image_dependent" if is_dep else "needs_review"
+                rec['quality']['notes'] = f"试卷出处: {parsed_info['paper_title']} (题号: {sqn})；包含正文图片"
+            else:
+                rec['has_image'] = False
+                rec['image_paths'] = []
+                rec['quality']['image_dependency'] = "not_image_dependent"
+                rec['quality']['notes'] = f"试卷出处: {parsed_info['paper_title']} (题号: {sqn})"
 
-sources:
-  - source_id: "GAOKAO_BENCH"
-    site_name: "OpenLMLab GAOKAO-Bench"
-    base_url: "https://github.com/OpenLMLab/GAOKAO-Bench"
-    source_type: "html"
-    exam_type: "高考真题"
-    has_answer: true
-    year_range: "2010-2022"
-    estimated_questions: 287
-    login_required: false
-    robots_checked: true
-    terms_checked: true
-    license_status: "research_only"
-    redistribution_allowed: false
-    collector: "Eric10Z4"
-    status: "approved"
-    notes: "上海人工智能实验室 OpenLMLab 高考客观题评测基准"
-    adapter: "gaokao_bench_adapter"
-    start_urls: ["https://raw.githubusercontent.com/OpenLMLab/GAOKAO-Bench/main/Data/Objective_Questions/2010-2022_History_MCQs.json"]
-    allowed_domains: ["raw.githubusercontent.com", "github.com"]
-    approved_by: "Eric10Z4"
-    approved_at: "{now_iso}"
-    terms_url: "https://github.com/OpenLMLab/GAOKAO-Bench/blob/main/LICENSE"
-    license_evidence: "Apache-2.0 / Open Research"
-    robots_checked_at: "{now_iso}"
+            # 4. 答案与证据规范
+            rec['answer'] = ""
+            rec['answer_explanation'] = ""
+            rec['answer_evidence'] = []
+            rec['quality']['answer_status'] = "missing"
 
-  - source_id: "AGIEVAL_GAOKAO"
-    site_name: "Microsoft Research AGIEval"
-    base_url: "https://github.com/ruixiangcui/AGIEval"
-    source_type: "html"
-    exam_type: "高考真题"
-    has_answer: true
-    year_range: "2010-2021"
-    estimated_questions: 235
-    login_required: false
-    robots_checked: true
-    terms_checked: true
-    license_status: "research_only"
-    redistribution_allowed: false
-    collector: "Eric10Z4"
-    status: "approved"
-    notes: "微软研究院 AGIEval 高考客观选择题子集"
-    adapter: "agieval_adapter"
-    start_urls: ["https://raw.githubusercontent.com/ruixiangcui/AGIEval/main/data/v1/gaokao-history.jsonl"]
-    allowed_domains: ["raw.githubusercontent.com", "github.com"]
-    approved_by: "Eric10Z4"
-    approved_at: "{now_iso}"
-    terms_url: "https://github.com/ruixiangcui/AGIEval/blob/main/LICENSE"
-    license_evidence: "MIT License / Open Research"
-    robots_checked_at: "{now_iso}"
+    # --- B. 前 400 道评测基准题 (GAOKAO_BENCH, AGIEVAL_GAOKAO, GAOKAO_MM) ---
+    else:
+        # 1. 修复官方验证判定：改为 single_source，证据 official=False, reliable=True
+        if rec['quality']['answer_status'] != 'single_source':
+            fixed_evidence_count += 1
+        rec['quality']['answer_status'] = 'single_source'
+        for ev in rec.get('answer_evidence', []):
+            ev['official'] = False
+            ev['reliable'] = True
 
-  - source_id: "GAOKAO_MM"
-    site_name: "OpenMOSS GAOKAO-MM"
-    base_url: "https://github.com/OpenMOSS/GAOKAO-MM"
-    source_type: "mixed"
-    exam_type: "高考真题"
-    has_answer: true
-    year_range: "2010-2023"
-    estimated_questions: 34
-    login_required: false
-    robots_checked: true
-    terms_checked: true
-    license_status: "research_only"
-    redistribution_allowed: false
-    collector: "Eric10Z4"
-    status: "approved"
-    notes: "复旦大学 MOSS 团队多模态评测基准（历史地图/漫画）"
-    adapter: "gaokao_mm_adapter"
-    start_urls: ["https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs.json"]
-    allowed_domains: ["raw.githubusercontent.com", "github.com"]
-    approved_by: "Eric10Z4"
-    approved_at: "{now_iso}"
-    terms_url: "https://github.com/OpenMOSS/GAOKAO-MM/blob/main/LICENSE"
-    license_evidence: "MIT License / Research Only"
-    robots_checked_at: "{now_iso}"
+        if source_id == 'GAOKAO_BENCH':
+            rec['quality']['notes'] = "参考答案来自OpenLMLab GAOKAO-Bench评测基准，待人工复核官方答案链"
+        elif source_id == 'AGIEVAL_GAOKAO':
+            rec['quality']['notes'] = "参考答案来自Microsoft Research AGIEval评测基准，待人工复核官方答案链"
+        elif source_id == 'GAOKAO_MM':
+            # 2. 修复多图题目漏图问题 (如 CHIS_000286)
+            sqn = rec['provenance']['source_question_number']
+            mm_it = mm_items_by_index.get(sqn)
+            if mm_it and mm_it.get('picture'):
+                all_mm_pics = [Path(p).name for p in mm_it['picture']]
+                # 确保已全部下载
+                for p_name in all_mm_pics:
+                    dest = assets_dir_4000 / p_name
+                    if not dest.exists():
+                        u = mm_img_base + p_name
+                        req = urllib.request.Request(u, headers={'User-Agent': 'Mozilla/5.0'})
+                        with urllib.request.urlopen(req, timeout=10) as resp:
+                            dest.write_bytes(resp.read())
+                rec['has_image'] = True
+                rec['image_paths'] = [f"assets/{p_name}" for p_name in all_mm_pics]
+                rec['quality']['image_dependency'] = "image_dependent"
+                rec['quality']['notes'] = "多模态题：包含历史图表/漫画/地图原件，参考答案来自GAOKAO-MM基准"
 
-  - source_id: "ZUJUAN_XKW"
-    site_name: "学科网组卷网"
-    base_url: "https://zujuan.xkw.com/gzls/"
-    source_type: "html"
-    exam_type: "高中阶段考试"
-    has_answer: false
-    year_range: "2021-2026"
-    estimated_questions: 3600
-    login_required: true
-    robots_checked: true
-    terms_checked: true
-    license_status: "research_only"
-    redistribution_allowed: false
-    collector: "Eric10Z4"
-    status: "approved"
-    notes: "经用户授权登录抓取最新各省名校高中历史模拟与期中期末试卷"
-    adapter: "zujuan_adapter"
-    start_urls: ["https://zujuan.xkw.com/gzls/shijuan/"]
-    allowed_domains: ["zujuan.xkw.com", "xkw.com"]
-    approved_by: "Eric10Z4"
-    approved_at: "{now_iso}"
-    terms_url: "https://www.xkw.com/help/terms.html"
-    license_evidence: "个人学习与科研教学原型评估"
-    robots_checked_at: "{now_iso}"
-'''
+    # --- C. 全量重新计算 ordered_hash 与 permutation_hash ---
+    rec['provenance']['ordered_hash'] = ordered_hash(rec)
+    rec['provenance']['permutation_hash'] = permutation_hash(rec)
+    rec['quality']['duplicate_status'] = 'unique'
 
-with open(os.path.join(BATCH_DIR, 'source_registry.yaml'), 'w', encoding='utf-8') as f:
-    f.write(registry_content)
+print(f'清洗修复统计:')
+print(f'  - 修复 D 选项污染题数: {fixed_d_count} 道')
+print(f'  - 修复默认年份 2024 题数: {fixed_year_count} 道')
+print(f'  - 补全/纠正图片标记与资源题数: {fixed_img_count} 道')
+print(f'  - 纠正基准答案 official 评级题数: {fixed_evidence_count} 道')
 
-with open(os.path.join(REPO_DIR, 'config', 'source_registry.yaml'), 'w', encoding='utf-8') as f:
-    f.write(registry_content)
+# 写回 GAOKAO_BENCH_BATCH_4000/questions.jsonl
+with q_4000_file.open('w', encoding='utf-8') as f:
+    for r in records_4000:
+        f.write(json.dumps(r, ensure_ascii=False) + '\n')
+print(f'>>> GAOKAO_BENCH_BATCH_4000/questions.jsonl 写回成功。')
 
-print('>>> source_registry.yaml 写入完成。')
+# ==============================================================================
+# 4. 同步更新 GAOKAO_BENCH_BATCH_400 与 GAOKAO_BENCH_BATCH_001
+# ==============================================================================
+print('\n[4/5] 同步更新 BATCH_400 与 BATCH_001 对应子集，保证版本一致性...')
+batch_400_file = REPO_DIR / 'GAOKAO_BENCH_BATCH_400/questions.jsonl'
+if batch_400_file.exists():
+    with batch_400_file.open('w', encoding='utf-8') as f:
+        for r in records_4000[:400]:
+            f.write(json.dumps(r, ensure_ascii=False) + '\n')
+
+batch_001_file = REPO_DIR / 'GAOKAO_BENCH_BATCH_001/questions.jsonl'
+if batch_001_file.exists():
+    with batch_001_file.open('w', encoding='utf-8') as f:
+        for r in records_4000[:20]:
+            f.write(json.dumps(r, ensure_ascii=False) + '\n')
+
+# 复制 assets 到 BATCH_400 和 BATCH_001
+import shutil
+for img_f in assets_dir_4000.glob('2010-2023_History_MCQs_*.png'):
+    shutil.copy(img_f, REPO_DIR / 'GAOKAO_BENCH_BATCH_400/assets/' / img_f.name)
+    shutil.copy(img_f, REPO_DIR / 'GAOKAO_BENCH_BATCH_001/assets/' / img_f.name)
+
+# ==============================================================================
+# 5. 重新生成全量验证报告与审核 CSV
+# ==============================================================================
+print('\n[5/5] 重新执行 pipeline 验证、导出 review.csv 并生成 summary.json...')
+for batch_name, recs in [
+    ('GAOKAO_BENCH_BATCH_4000', records_4000),
+    ('GAOKAO_BENCH_BATCH_400', records_4000[:400]),
+    ('GAOKAO_BENCH_BATCH_001', records_4000[:20])
+]:
+    b_dir = REPO_DIR / batch_name
+    valid_recs, v_summary = validate_records(recs)
+    q_report = build_quality_report(valid_recs)
+    write_quality_report(b_dir / 'reports/summary.json', q_report)
+    export_review_csv(b_dir / 'reports/review.csv', valid_recs)
+    print(f'>>> {batch_name} 报告与审核表已更新:')
+    print(f'    有效性: {v_summary.structurally_valid}/{v_summary.total}')
+    print(f'    年份分布: {dict(v_summary.by_year)}')
+    print(f'    图片依赖: {v_summary.image_dependent} 道')
+
+print('\n=== 全部数据批次清洗修补与报告刷新圆满完成！ ===')

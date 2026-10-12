@@ -75,7 +75,7 @@ class AgiEvalAdapter(BaseAdapter):
                     {
                         "source_id": self.source.source_id,
                         "answer": ans,
-                        "official": True,
+                        "official": False,
                         "reliable": True,
                         "evidence_url": self.RAW_URL,
                         "raw_file": raw_file_rel,
@@ -118,7 +118,7 @@ class AgiEvalAdapter(BaseAdapter):
                     "material_type": "",
                 },
                 "quality": {
-                    "answer_status": "verified",
+                    "answer_status": "single_source",
                     "duplicate_status": "unique",
                     "parse_status": "parsed",
                     "review_status": "pending",
@@ -126,7 +126,7 @@ class AgiEvalAdapter(BaseAdapter):
                     "issues": [],
                     "collector": self.source.collector or "collector_01",
                     "reviewer": "",
-                    "notes": f"试卷出处: {source_info}",
+                    "notes": "参考答案来自Microsoft Research AGIEval评测基准，待人工复核官方答案链",
                 },
                 "provenance": {
                     "raw_file": raw_file_rel,

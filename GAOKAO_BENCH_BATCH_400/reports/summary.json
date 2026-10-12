@@ -1,6 +1,6 @@
 {
   "answer_statuses": {
-    "verified": 400
+    "single_source": 400
   },
   "by_source": {
     "AGIEVAL_GAOKAO": 107,
@@ -44,5 +44,5 @@
   },
   "suspected_duplicate": 0,
   "total": 400,
-  "verified_answer": 400
+  "verified_answer": 0
 }

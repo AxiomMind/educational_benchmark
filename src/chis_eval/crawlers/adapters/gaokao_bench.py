@@ -62,7 +62,7 @@ class GaokaoBenchAdapter(BaseAdapter):
                     {
                         "source_id": self.source.source_id,
                         "answer": ans,
-                        "official": True,
+                        "official": False,
                         "reliable": True,
                         "evidence_url": self.RAW_URL,
                         "raw_file": raw_file_rel,
@@ -105,7 +105,7 @@ class GaokaoBenchAdapter(BaseAdapter):
                     "material_type": "",
                 },
                 "quality": {
-                    "answer_status": "verified",
+                    "answer_status": "single_source",
                     "duplicate_status": "unique",
                     "parse_status": "parsed",
                     "review_status": "pending",
@@ -113,7 +113,7 @@ class GaokaoBenchAdapter(BaseAdapter):
                     "issues": [],
                     "collector": self.source.collector or "collector_01",
                     "reviewer": "",
-                    "notes": "",
+                    "notes": "参考答案来自OpenLMLab GAOKAO-Bench评测基准，待人工复核官方答案链",
                 },
                 "provenance": {
                     "raw_file": raw_file_rel,

@@ -166,7 +166,7 @@ for item in bench_data:
             {
                 "source_id": "GAOKAO_BENCH",
                 "answer": ans,
-                "official": True,
+                "official": False,
                 "reliable": True,
                 "evidence_url": BENCH_URL,
                 "raw_file": "raw/gaokao_bench_history.json",
@@ -209,7 +209,7 @@ for item in bench_data:
             "material_type": ""
         },
         "quality": {
-            "answer_status": "verified",
+            "answer_status": "single_source",
             "duplicate_status": "unique",
             "parse_status": "parsed",
             "review_status": "pending",
@@ -217,7 +217,7 @@ for item in bench_data:
             "issues": [],
             "collector": "Eric10Z4",
             "reviewer": "",
-            "notes": ""
+            "notes": "参考答案来自OpenLMLab GAOKAO-Bench评测基准，待人工复核官方答案链"
         },
         "provenance": {
             "raw_file": "raw/gaokao_bench_history.json",
@@ -263,19 +263,20 @@ for item in mm_data:
     seen_signatures.add(sig)
 
     # Download image asset
-    pic_filename = os.path.basename(pics[0])
-    pic_url = f"https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs/{pic_filename}"
-    local_pic_path = os.path.join(ASSETS_DIR, pic_filename)
-    try:
-        req = urllib.request.Request(pic_url, headers={'User-Agent': 'CHisEval/0.1'})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            pic_bytes = resp.read()
-        with open(local_pic_path, 'wb') as f:
-            f.write(pic_bytes)
-        pic_asset_rel = f"assets/{pic_filename}"
-    except Exception as e:
-        print(f'Warning: pic download failed {pic_url}: {e}')
-        pic_asset_rel = ""
+    pic_asset_paths = []
+    for pic_rel in pics:
+        pic_filename = os.path.basename(pic_rel)
+        pic_url = f"https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs/{pic_filename}"
+        local_pic_path = os.path.join(ASSETS_DIR, pic_filename)
+        try:
+            req = urllib.request.Request(pic_url, headers={'User-Agent': 'CHisEval/0.1'})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                pic_bytes = resp.read()
+            with open(local_pic_path, 'wb') as f:
+                f.write(pic_bytes)
+            pic_asset_paths.append(f"assets/{pic_filename}")
+        except Exception as e:
+            print(f'Warning: pic download failed {pic_url}: {e}')
 
     year_val = int(item.get('year')) if str(item.get('year', '')).isdigit() else 2022
     qid = f"CHIS_{current_id:06d}"
@@ -297,7 +298,7 @@ for item in mm_data:
             {
                 "source_id": "GAOKAO_MM",
                 "answer": ans,
-                "official": True,
+                "official": False,
                 "reliable": True,
                 "evidence_url": MM_URL,
                 "raw_file": "raw/gaokao_mm_history.json",
@@ -306,8 +307,8 @@ for item in mm_data:
                 "raw_answer": f"答案：{ans}"
             }
         ],
-        "has_image": True if pic_asset_rel else False,
-        "image_paths": [pic_asset_rel] if pic_asset_rel else [],
+        "has_image": True if pic_asset_paths else False,
+        "image_paths": pic_asset_paths,
         "source": {
             "source_id": "GAOKAO_MM",
             "site_name": "OpenMOSS GAOKAO-MM",
@@ -340,15 +341,15 @@ for item in mm_data:
             "material_type": ""
         },
         "quality": {
-            "answer_status": "verified",
+            "answer_status": "single_source",
             "duplicate_status": "unique",
             "parse_status": "parsed",
             "review_status": "pending",
-            "image_dependency": "image_dependent" if pic_asset_rel else "not_image_dependent",
+            "image_dependency": "image_dependent" if pic_asset_paths else "not_image_dependent",
             "issues": [],
             "collector": "Eric10Z4",
             "reviewer": "",
-            "notes": "包含历史图表/漫画/地图原件，答案经官方验证"
+            "notes": "多模态题：包含历史图表/漫画/地图原件，参考答案来自GAOKAO-MM基准"
         },
         "provenance": {
             "raw_file": "raw/gaokao_mm_history.json",
@@ -429,7 +430,7 @@ for idx, item in enumerate(agieval_lines):
             {
                 "source_id": "AGIEVAL_GAOKAO",
                 "answer": ans,
-                "official": True,
+                "official": False,
                 "reliable": True,
                 "evidence_url": AGIEVAL_URL,
                 "raw_file": "raw/agieval_gaokao_history.jsonl",
@@ -472,7 +473,7 @@ for idx, item in enumerate(agieval_lines):
             "material_type": ""
         },
         "quality": {
-            "answer_status": "verified",
+            "answer_status": "single_source",
             "duplicate_status": "unique",
             "parse_status": "parsed",
             "review_status": "pending",
@@ -480,7 +481,7 @@ for idx, item in enumerate(agieval_lines):
             "issues": [],
             "collector": "Eric10Z4",
             "reviewer": "",
-            "notes": f"数据来源: {source_info}"
+            "notes": "参考答案来自Microsoft Research AGIEval评测基准，待人工复核官方答案链"
         },
         "provenance": {
             "raw_file": "raw/agieval_gaokao_history.jsonl",

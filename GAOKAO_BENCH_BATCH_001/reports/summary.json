@@ -1,21 +1,18 @@
 {
   "answer_statuses": {
-    "verified": 20
+    "single_source": 20
   },
   "by_source": {
-    "GAOKAO_BENCH": 16,
-    "GAOKAO_MM": 4
+    "GAOKAO_BENCH": 20
   },
   "by_year": {
-    "2021": 2,
-    "2022": 16,
-    "2023": 2
+    "2022": 20
   },
   "duplicate_statuses": {
     "unique": 20
   },
   "exact_duplicate": 0,
-  "image_dependent": 1,
+  "image_dependent": 0,
   "missing_answer": 0,
   "needs_human_review": 20,
   "parse_failed": 0,
@@ -29,5 +26,5 @@
   },
   "suspected_duplicate": 0,
   "total": 20,
-  "verified_answer": 20
+  "verified_answer": 0
 }

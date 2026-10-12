@@ -48,8 +48,9 @@ class GaokaoMmAdapter(BaseAdapter):
 
             image_paths = []
             if pics:
-                pic_name = Path(pics[0]).name
-                image_paths.append(f"assets/{pic_name}")
+                for p in pics:
+                    pic_name = Path(p).name
+                    image_paths.append(f"assets/{pic_name}")
 
             record = {
                 "schema_version": "0.1.0",
@@ -68,7 +69,7 @@ class GaokaoMmAdapter(BaseAdapter):
                     {
                         "source_id": self.source.source_id,
                         "answer": ans,
-                        "official": True,
+                        "official": False,
                         "reliable": True,
                         "evidence_url": self.RAW_URL,
                         "raw_file": raw_file_rel,
@@ -111,7 +112,7 @@ class GaokaoMmAdapter(BaseAdapter):
                     "material_type": "",
                 },
                 "quality": {
-                    "answer_status": "verified",
+                    "answer_status": "single_source",
                     "duplicate_status": "unique",
                     "parse_status": "parsed",
                     "review_status": "pending",
@@ -119,7 +120,7 @@ class GaokaoMmAdapter(BaseAdapter):
                     "issues": [],
                     "collector": self.source.collector or "collector_01",
                     "reviewer": "",
-                    "notes": "包含历史图表/漫画/地图原件，答案经官方验证",
+                    "notes": "多模态题：包含历史图表/漫画/地图原件，参考答案来自GAOKAO-MM基准",
                 },
                 "provenance": {
                     "raw_file": raw_file_rel,

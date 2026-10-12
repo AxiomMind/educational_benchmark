@@ -156,7 +156,7 @@ for item in bench_candidates:
             {
                 "source_id": "GAOKAO_BENCH",
                 "answer": ans,
-                "official": True,
+                "official": False,
                 "reliable": True,
                 "evidence_url": GAOKAO_BENCH_RAW_URL,
                 "raw_file": "raw/gaokao_bench_history.json",
@@ -199,7 +199,7 @@ for item in bench_candidates:
             "material_type": ""
         },
         "quality": {
-            "answer_status": "verified",
+            "answer_status": "single_source",
             "duplicate_status": "unique",
             "parse_status": "parsed",
             "review_status": "pending",
@@ -207,7 +207,7 @@ for item in bench_candidates:
             "issues": [],
             "collector": "Eric10Z4",
             "reviewer": "",
-            "notes": ""
+            "notes": "参考答案来自OpenLMLab GAOKAO-Bench评测基准，待人工复核官方答案链"
         },
         "provenance": {
             "raw_file": "raw/gaokao_bench_history.json",
@@ -249,20 +249,20 @@ for item in mm_candidates:
         continue
 
     # Download image asset from github
-    pic_rel = pics[0] # e.g. ../Data/2010-2023_History_MCQs/2010-2023_History_MCQs_0_0.png
-    pic_filename = os.path.basename(pic_rel)
-    pic_url = f"https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs/{pic_filename}"
-    local_pic_path = os.path.join(ASSETS_DIR, pic_filename)
-    try:
-        req = urllib.request.Request(pic_url, headers={'User-Agent': 'CHisEval/0.1'})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            pic_bytes = resp.read()
-        with open(local_pic_path, 'wb') as f:
-            f.write(pic_bytes)
-        pic_asset_rel = f"assets/{pic_filename}"
-    except Exception as e:
-        print(f'下载图片失败 {pic_url}: {e}')
-        continue
+    pic_asset_paths = []
+    for pic_rel in pics:
+        pic_filename = os.path.basename(pic_rel)
+        pic_url = f"https://raw.githubusercontent.com/OpenMOSS/GAOKAO-MM/main/Data/2010-2023_History_MCQs/{pic_filename}"
+        local_pic_path = os.path.join(ASSETS_DIR, pic_filename)
+        try:
+            req = urllib.request.Request(pic_url, headers={'User-Agent': 'CHisEval/0.1'})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                pic_bytes = resp.read()
+            with open(local_pic_path, 'wb') as f:
+                f.write(pic_bytes)
+            pic_asset_paths.append(f"assets/{pic_filename}")
+        except Exception as e:
+            print(f'下载图片失败 {pic_url}: {e}')
 
     qid = f"CHIS_{q_counter:06d}"
     year_val = int(item.get('year')) if item.get('year', '').isdigit() else 2022
@@ -284,7 +284,7 @@ for item in mm_candidates:
             {
                 "source_id": "GAOKAO_MM",
                 "answer": ans,
-                "official": True,
+                "official": False,
                 "reliable": True,
                 "evidence_url": GAOKAO_MM_RAW_URL,
                 "raw_file": "raw/gaokao_mm_history.json",
@@ -293,8 +293,8 @@ for item in mm_candidates:
                 "raw_answer": f"答案：{ans}"
             }
         ],
-        "has_image": True,
-        "image_paths": [pic_asset_rel],
+        "has_image": True if pic_asset_paths else False,
+        "image_paths": pic_asset_paths,
         "source": {
             "source_id": "GAOKAO_MM",
             "site_name": "OpenMOSS GAOKAO-MM",
@@ -327,7 +327,7 @@ for item in mm_candidates:
             "material_type": ""
         },
         "quality": {
-            "answer_status": "verified",
+            "answer_status": "single_source",
             "duplicate_status": "unique",
             "parse_status": "parsed",
             "review_status": "pending",
@@ -335,7 +335,7 @@ for item in mm_candidates:
             "issues": [],
             "collector": "Eric10Z4",
             "reviewer": "",
-            "notes": "包含历史图表/漫画/地图原件，答案经官方验证"
+            "notes": "多模态题：包含历史图表/漫画/地图原件，参考答案来自GAOKAO-MM基准"
         },
         "provenance": {
             "raw_file": "raw/gaokao_mm_history.json",
