@@ -12,6 +12,8 @@ build/
 data/xkw_cookies.json
 data/*.json
 data/*.log
+data/answer_images/**
+data/tmp_answer_imgs/**
 *.db
 data/raw/**
 data/parsed/**
