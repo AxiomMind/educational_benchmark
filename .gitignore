@@ -10,6 +10,7 @@ build/
 
 # Runtime outputs. Real exam material must not be committed by default.
 data/xkw_cookies.json
+data/*.json
 data/*.log
 *.db
 data/raw/**

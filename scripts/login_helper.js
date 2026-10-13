@@ -5,10 +5,9 @@ const path = require('path');
 const COOKIE_PATH = 'C:/Users/26730/educational_benchmark/data/xkw_cookies.json';
 
 (async () => {
-  console.log('>>> 正在启动登录窗口，请稍候...');
+  console.log('>>> 正在启动可视化浏览器登录窗口...');
   const browser = await chromium.launch({
     headless: false,
-    proxy: { server: 'http://127.0.0.1:18888' },
     args: [
       '--start-maximized',
       '--disable-blink-features=AutomationControlled'
@@ -24,40 +23,39 @@ const COOKIE_PATH = 'C:/Users/26730/educational_benchmark/data/xkw_cookies.json'
   console.log('>>> 正在打开组卷网首页...');
 
   try {
-    await page.goto('https://zujuan.xkw.com/gzls/', { waitUntil: 'load', timeout: 30000 });
+    await page.goto('https://zujuan.xkw.com/gzls/', { waitUntil: 'domcontentloaded', timeout: 30000 });
   } catch (err) {
     console.log('页面加载提示:', err.message);
   }
 
-  await page.waitForTimeout(3000);
+  await page.waitForTimeout(2000);
 
   // 尝试自动触发登录弹窗
-  console.log('>>> 正在尝试唤起登录窗口...');
+  console.log('>>> 正在自动唤起登录弹窗...');
   try {
-    const loginBtn = await page.$('.login-btn, a:has-text("登录")');
-    if (loginBtn) {
-      await loginBtn.click();
-      console.log('>>> 已点击登录按钮！');
-    } else {
-      await page.evaluate(() => {
-        if (typeof logindiv === 'function') logindiv();
-      });
-      console.log('>>> 已执行 logindiv()！');
-    }
+    await page.evaluate(() => {
+      if (typeof logindiv === 'function') {
+        logindiv();
+      } else {
+        const btn = document.querySelector('.login-btn');
+        if (btn) btn.click();
+      }
+    });
+    console.log('>>> 登录弹窗已唤起！');
   } catch (e) {
-    console.log('点击登录异常:', e.message);
+    console.log('唤起登录弹窗提示:', e.message);
   }
 
   console.log('\n======================================================');
-  console.log(' 请在弹出的浏览器窗口中，使用微信扫码完成登录！');
-  console.log(' 登录完成后脚本会自动捕获 Cookie 并关闭窗口。');
+  console.log(' 请在弹出的浏览器窗口中，扫码或验证码登录已充值的 VIP 账号！');
+  console.log(' 登录成功后，脚本会自动捕获 VIP 凭证并关闭窗口。');
   console.log('======================================================\n');
 
-  // 轮询检查登录态（最多等待 3 分钟）
+  // 轮询检查登录态（最多等待 5 分钟）
   const startTime = Date.now();
   let loggedIn = false;
 
-  while (Date.now() - startTime < 180000) {
+  while (Date.now() - startTime < 300000) {
     await page.waitForTimeout(2000);
 
     // 检查 cookies 中是否有学科网登录关键标识
