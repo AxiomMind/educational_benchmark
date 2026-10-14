@@ -69,5 +69,5 @@ website:
 python -m pytest
 ```
 
-See `docs/crawler_usage.md`, `docs/data_schema.md`, and
-`docs/review_workflow.md` for workflow details.
+See `docs/crawler_usage.md`, `docs/data_schema.md`, `docs/review_workflow.md`,
+and `docs/answer_extraction_pipeline.md` for workflow and pipeline details.
