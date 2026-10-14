@@ -125,6 +125,8 @@ def main():
             fail_count += 1
             if reason in ["risk_alert", "rate_limited"]:
                 print(f"\n>>> [⚠️ 触发风控: {reason}] 下载器自动保护退出！")
+                if success_count == 0:
+                    sys.exit(2)
                 break
 
         # 进度输出

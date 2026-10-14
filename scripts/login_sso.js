@@ -57,14 +57,14 @@ const LOGIN_URL = 'https://sso.xkw.com/login?appId=10001&returnUrl=https%3A%2F%2
       // 只要 URL 重定向到了 zujuan.xkw.com，或者已经具有核心登录令牌，且不在登录页上
       if ((hasAuthCookie && !currentUrl.includes('/login')) || (currentUrl.includes('zujuan.xkw.com') && hasAuthCookie)) {
         console.log('>>> 🎉 捕获到扫码登录成功！当前页面:', currentUrl);
-        console.log('>>> 正在同步并刷新 VIP 完整会话 Cookie...');
-
-        // 稍微等待 4 秒，确保组卷网全站 Cookie 写入完毕
-        await page.waitForTimeout(4000);
-
+        console.log('>>> 正在直接加载组卷网以获取专属解密 Token...');
+        try {
+          await page.goto('https://zujuan.xkw.com/gzls/', { waitUntil: 'domcontentloaded', timeout: 20000 });
+          await page.waitForTimeout(3000);
+        } catch (e) {}
         const allCookies = await context.cookies();
         fs.writeFileSync(COOKIE_PATH, JSON.stringify(allCookies, null, 2), 'utf8');
-        console.log('>>> 🎉 最新 VIP Cookie 已成功保存到:', COOKIE_PATH);
+        console.log('>>> 🎉 最新 VIP 组卷网 Cookie 已成功保存到:', COOKIE_PATH);
         loggedIn = true;
         break;
       }

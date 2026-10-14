@@ -49,8 +49,14 @@ def main():
             break
 
         # Step 1: 下载原图
-        if not run(f"python scripts/fetch_answer_images.py {batch_size}"):
-            print(">>> 原图下载中断或遇到异常，流水线安全暂停。")
+        proc = subprocess.run(f"python scripts/fetch_answer_images.py {batch_size}", shell=True, text=True, encoding="utf-8")
+        if proc.returncode == 2:
+            cooldown_s = random.uniform(180.0, 240.0)
+            print(f"\n>>> [🕒 频控冷却中] 检测到组卷网接口处于临时频控期，自动静默休眠 {cooldown_s/60:.1f} 分钟后探测恢复...")
+            time.sleep(cooldown_s)
+            continue
+        elif proc.returncode != 0:
+            print(f">>> 原图下载发生未预期异常 (code {proc.returncode})，流水线安全暂停。")
             break
 
         # Step 2: 离线并行多核 OCR
