@@ -78,10 +78,10 @@ def main():
         print(f"\n>>> ✅ 轮次 #{cycle} 顺利完成并已成功 push 到 GitHub！")
         cycle += 1
 
-        # 批次间休息 12 ~ 18 秒，让服务器会话自然平缓，彻底规避风控
+        # 批次间休息 25 ~ 40 秒，让服务器会话自然平缓，彻底规避风控
         rem_after, _, _ = get_remaining_count()
         if rem_after > 0:
-            rest_s = random.uniform(12.0, 18.0)
+            rest_s = random.uniform(25.0, 40.0)
             print(f">>> 批次间拟人休整 {rest_s:.1f} 秒，随后自动进入下一轮...")
             time.sleep(rest_s)
 

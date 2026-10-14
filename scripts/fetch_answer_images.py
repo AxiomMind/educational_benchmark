@@ -78,6 +78,10 @@ def fetch_single_image(qid):
     if not img_bytes or len(img_bytes) < 1000:
         return False, "bad_image"
 
+    if len(img_bytes) < 10000:
+        # 组卷网风控提示图大小通常在 2KB ~ 4KB
+        return False, "rate_limited"
+
     with open(out_path, "wb") as fp:
         fp.write(img_bytes)
 
@@ -119,21 +123,21 @@ def main():
             success_count += 1
         else:
             fail_count += 1
-            if reason == "risk_alert":
-                print("\n>>> 安全机制触发，下载器自动暂停退出以保护账号！")
+            if reason in ["risk_alert", "rate_limited"]:
+                print(f"\n>>> [⚠️ 触发风控: {reason}] 下载器自动保护退出！")
                 break
 
         # 进度输出
         if idx % 10 == 0 or idx == len(to_download):
-            speed = idx / (time.time() - t0)
+            speed = idx / max(time.time() - t0, 0.1)
             print(f"进度: [{idx}/{len(to_download)}] 成功: {success_count} | 失败: {fail_count} | 速度: {speed:.1f} 题/秒 | 预估剩余: {(len(to_download)-idx)/max(speed, 0.1)/60:.1f} 分钟")
 
-    # 模拟人类教师翻页查看节奏（1.0 ~ 1.5 秒）
-    time.sleep(random.uniform(1.0, 1.5))
+        # 严格执行拟人平缓节奏（单题 1.8 ~ 2.6 秒）
+        time.sleep(random.uniform(1.8, 2.6))
 
-    # 每 50 题稍微停顿 4 秒（模拟翻卷或看题）
-    if idx % 50 == 0 and idx != len(to_download):
-        time.sleep(random.uniform(3.0, 5.0))
+        # 每 30 题稍微停顿 8 ~ 12 秒（模拟翻卷或看题）
+        if idx % 30 == 0 and idx != len(to_download):
+            time.sleep(random.uniform(8.0, 12.0))
 
     print(f"\n>>> 本轮下载结束！共下载成功: {success_count} 张原图，耗时: {(time.time()-t0)/60:.1f} 分钟。")
 
