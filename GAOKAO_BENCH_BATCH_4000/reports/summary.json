@@ -1,7 +1,7 @@
 {
   "answer_statuses": {
-    "missing": 2770,
-    "single_source": 1230
+    "missing": 2675,
+    "single_source": 1325
   },
   "by_source": {
     "AGIEVAL_GAOKAO": 107,
@@ -37,12 +37,12 @@
   },
   "exact_duplicate": 0,
   "image_dependent": 345,
-  "missing_answer": 2770,
+  "missing_answer": 2675,
   "needs_human_review": 4000,
   "parse_failed": 0,
   "parse_statuses": {
-    "parsed": 830,
-    "valid": 3170
+    "parsed": 925,
+    "valid": 3075
   },
   "qualified": 0,
   "rejection_reasons": {},
