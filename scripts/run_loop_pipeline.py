@@ -46,6 +46,14 @@ def main():
 
         if rem == 0:
             print(">>> 🎉🎉 全部 3,600 道组卷网题目答案已全量提取、OCR、回填并提交！任务圆满结束！")
+            print(">>> 正在为主人统一打包全量答案高清原图证据链...")
+            import zipfile
+            zip_dest = "data/CHisEval_3600题答案原图证据链归档.zip"
+            with zipfile.ZipFile(zip_dest, "w", zipfile.ZIP_DEFLATED) as zfp:
+                for img_name in sorted(os.listdir(IMG_DIR)):
+                    if img_name.endswith(".png"):
+                        zfp.write(os.path.join(IMG_DIR, img_name), arcname=f"answer_images/{img_name}")
+            print(f">>> 🎉 答案原图证据链打包完成！文件路径: {os.path.abspath(zip_dest)}")
             break
 
         # Step 1: 下载原图
