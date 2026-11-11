@@ -60,6 +60,8 @@ class ZujuanAdapter(BaseAdapter):
         if cookies:
             crawler.client.cookies.update(cookies)
         else:
+            if self.source.login_required:
+                raise ValueError("该来源需要本地登录会话，请先运行 node scripts/login.js")
             self.logger.info("Running in guest mode without authenticated cookies.")
 
         results: list["DownloadResult"] = []

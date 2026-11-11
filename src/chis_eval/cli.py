@@ -36,6 +36,7 @@ def build_parser() -> argparse.ArgumentParser:
     crawl.add_argument("--raw-dir", default="data/raw")
     crawl.add_argument("--state", default="data/state/crawl_state.sqlite3")
     crawl.add_argument("--dry-run", action="store_true")
+    crawl.add_argument("--authenticated", action="store_true", help="Use an existing local session for a login-required source")
     crawl.set_defaults(handler=_crawl)
 
     parse = subparsers.add_parser("parse", help="Parse saved files with a source adapter")
@@ -101,7 +102,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 def _crawl(args: argparse.Namespace) -> int:
     registry = SourceRegistry.load(args.registry)
-    source = registry.assert_crawl_allowed(args.source)
+    source = registry.assert_crawl_allowed(args.source, authenticated=args.authenticated)
     adapter = get_adapter(source.adapter, source)
     with BaseCrawler(
         source,

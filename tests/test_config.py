@@ -56,3 +56,12 @@ def test_registry_rejects_draft_and_restricted(tmp_path: Path) -> None:
     registry = SourceRegistry.load(path)
     with pytest.raises(SourceNotApprovedError, match="not approved"):
         registry.assert_crawl_allowed("fixture_html")
+
+
+def test_login_source_requires_explicit_authenticated_mode(tmp_path: Path) -> None:
+    path = tmp_path / "registry.yaml"
+    path.write_text(_registry_text().replace("login_required: false", "login_required: true"), encoding="utf-8")
+    registry = SourceRegistry.load(path)
+    with pytest.raises(SourceNotApprovedError, match="login is required"):
+        registry.assert_crawl_allowed("fixture_html")
+    assert registry.assert_crawl_allowed("fixture_html", authenticated=True).login_required

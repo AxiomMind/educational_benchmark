@@ -7,29 +7,19 @@ htmlcov/
 *.egg-info/
 dist/
 build/
+node_modules/
 
-# Runtime outputs. Real exam material must not be committed by default.
-data/xkw_cookies.json
-data/*.json
-data/*.log
-data/*.zip
-data/answer_images/**
-data/tmp_answer_imgs/**
+# 本地会话、原始下载、OCR 缓存和工作文件
+data/
+logs/
 *.db
-data/raw/**
-data/parsed/**
-data/cleaned/**
-data/reviewed/**
-data/rejected/**
-data/reports/**
-data/state/**
-logs/**
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+.env
+.env.*
+!.env.example
 
-!data/raw/.gitkeep
-!data/parsed/.gitkeep
-!data/cleaned/.gitkeep
-!data/reviewed/.gitkeep
-!data/rejected/.gitkeep
-!data/reports/.gitkeep
-!data/state/.gitkeep
-!logs/.gitkeep
+# 审核表按需生成，仓库仅保留统计和去重记录
+datasets/**/reports/review.csv
+datasets/**/validated.jsonl

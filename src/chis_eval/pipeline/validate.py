@@ -109,6 +109,8 @@ def _record_issues(record: dict[str, Any], earliest_year: int) -> list[dict[str,
     issues: list[dict[str, str]] = []
     if not str(record.get("normalized_question") or record.get("question") or "").strip():
         issues.append(_issue("empty_question", "error", "Question text is empty"))
+    if record.get("question") != record.get("normalized_question"):
+        issues.append(_issue("question_normalization_mismatch", "error", "question must equal normalized_question"))
     if not str(record.get("group_id") or "").strip():
         issues.append(_issue("missing_group_id", "error", "group_id is empty"))
 
@@ -190,6 +192,9 @@ def _set_answer_status(record: dict[str, Any]) -> None:
 
 def _set_image_dependency(record: dict[str, Any]) -> None:
     quality = record.setdefault("quality", {})
+    # A confirmed dependency remains true even if the actual image is missing.
+    if quality.get("image_dependency") == "image_dependent":
+        return
     if not record.get("has_image"):
         quality["image_dependency"] = "not_image_dependent"
         return

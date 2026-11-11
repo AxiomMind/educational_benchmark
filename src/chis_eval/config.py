@@ -144,13 +144,13 @@ class SourceRegistry:
         except KeyError as exc:
             raise ConfigurationError(f"Unknown source_id: {source_id}") from exc
 
-    def assert_crawl_allowed(self, source_id: str) -> SourceEntry:
+    def assert_crawl_allowed(self, source_id: str, *, authenticated: bool = False) -> SourceEntry:
         source = self.require_source(source_id)
         reasons: list[str] = []
         if source.status != "approved":
             reasons.append("status is not approved")
-        if source.login_required:
-            reasons.append("login is required")
+        if source.login_required and not authenticated:
+            reasons.append("login is required; use --authenticated with an existing local session")
         if not source.robots_checked:
             reasons.append("robots policy has not been checked")
         if not source.terms_checked:

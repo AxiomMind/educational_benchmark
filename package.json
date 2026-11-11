@@ -1,0 +1,11 @@
+{
+  "name": "chis-eval-login",
+  "private": true,
+  "description": "Optional interactive login helper",
+  "scripts": {
+    "login": "node scripts/login.js"
+  },
+  "dependencies": {
+    "playwright": "^1.56.0"
+  }
+}

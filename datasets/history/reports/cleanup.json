@@ -1,0 +1,1113 @@
+{
+  "date": "2026-11-11",
+  "previous_commit": "21e6f0f8300ffa98381828523a488f9589064c7a",
+  "before_records": 4000,
+  "after_records": 3995,
+  "removed_duplicates": [
+    {
+      "kept_question_id": "CHIS_000067",
+      "removed_question_id": "CHIS_002765",
+      "reason": "相同题干与选项，仅分值前缀、空白和标点不同",
+      "kept_answer": "A",
+      "removed_answer": "A",
+      "correct_option_text": "内阁权势强大"
+    },
+    {
+      "kept_question_id": "CHIS_000266",
+      "removed_question_id": "CHIS_003000",
+      "reason": "相同题干、选项及步辇图场景；图像裁切和清晰度不同",
+      "kept_answer": "C",
+      "removed_answer": "C",
+      "correct_option_text": "艺术审美与史料价值的统一"
+    },
+    {
+      "kept_question_id": "CHIS_002163",
+      "removed_question_id": "CHIS_003717",
+      "reason": "相同表格与选项，设问位置不同",
+      "kept_answer": "C",
+      "removed_answer": "C",
+      "correct_option_text": "中国实行独立自主和平外交"
+    },
+    {
+      "kept_question_id": "CHIS_000953",
+      "removed_question_id": "CHIS_002269",
+      "reason": "相同折线图数据、选项集合；A/B 换序，正确选项内容一致",
+      "kept_answer": "B",
+      "removed_answer": "A",
+      "correct_option_text": "工厂数量变化受战争因素影响"
+    },
+    {
+      "kept_question_id": "CHIS_001471",
+      "removed_question_id": "CHIS_003856",
+      "reason": "相同材料与设问；个别字词、断行和选项顺序不同",
+      "kept_answer": "A",
+      "removed_answer": "B",
+      "correct_option_text": "士族凭借门第垄断高层官职"
+    }
+  ],
+  "retained_image_variants": [
+    "CHIS_000273",
+    "CHIS_002769"
+  ],
+  "fixed_question_fields": [
+    "CHIS_003497",
+    "CHIS_003725"
+  ],
+  "flagged_missing_images": [
+    "CHIS_000312",
+    "CHIS_000363"
+  ],
+  "answer_policy": "仅合并重复来源记录，不将转载来源视为独立验证；答案和解析未做全量人工核验",
+  "removed_unreferenced_files": [
+    {
+      "path": "datasets/history/assets/2010-2023_History_MCQs_4_0.png",
+      "bytes": 114869,
+      "sha256": "bfcec52fcb9d0aec1e6f77b3da4fc5c902c03870dfc8093452d48d1a2176821f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/2010-2023_History_MCQs_4_1.png",
+      "bytes": 100705,
+      "sha256": "09894d758b4455ac68f5c24b6fa6bda6ce7cf47e1e8282c029f63db3295ad9b0",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/2010-2023_History_MCQs_4_2.png",
+      "bytes": 105509,
+      "sha256": "414802225ce01f79c8ef7c3df5244d3be0644e1395fcc8533e20bb46f2ba90fe",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/2010-2023_History_MCQs_4_3.png",
+      "bytes": 105093,
+      "sha256": "d5d5e833de211afa58d87e13ec8b9c5adbdcddc6ea5a7f70540f0a8598f9ea02",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_10007544_27f7c4f94b664324a070d3d050bbd599.png",
+      "bytes": 14079,
+      "sha256": "a6ac1ea4b9f4274adb42d1f27b8c3f86c74db0e9af15c8e58c4a5ab92a59c0f0",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_10329704_00ee57aca1f742d68d74756d2502d13d.png",
+      "bytes": 25091,
+      "sha256": "837a661cd4960eda5c8acd01fc862000dcaf7b573ed5d00c519cb0fe7d51b8e9",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_10446975_070d1e91cb894966a6b19be3895ca93c.png",
+      "bytes": 28494,
+      "sha256": "17639ab31c2cb8e9440ff8cc030db6f5f2fefafb2804e3f2f6ceb0858b1f447a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_10506692_e1151b30-6dd1-4b27-be4e-5cdc4c1da28d.png",
+      "bytes": 85653,
+      "sha256": "136cca0328b900c94a9c93cc34aad3fa67fa58713be473ed7a3735d23af045fb",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_14581293_73a1d3b53d314f35a8d79c920c710345.png",
+      "bytes": 40898,
+      "sha256": "ed66ac67c0ea4593b5fcac8235d925297b6febf32f20cced01c5a3d03dacf7b8",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_15944608_2fbe15dd0526472c95aad0a83eeb625f.png",
+      "bytes": 47794,
+      "sha256": "79a6473aeab936f96bf0a6a457bbe5b74d8f9ac46c28d4265d461198284b3bc7",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_16085380_1769141d-9796-432e-bcdd-8356f5f89d84.png",
+      "bytes": 22779,
+      "sha256": "867c77be895db112c629bd3f4f041b08afd109410a9cd6576f8fc80d130418bd",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_16526626_1c5e3b1b-c831-48a4-933d-71cb06c63e11.png",
+      "bytes": 146312,
+      "sha256": "385966d235a11f7560676af5692101ba7859af7a5a2004ef9d88f5252b72b45d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_16673822_f7b0a086-1ca1-4221-b975-6ea949ccd26d.png",
+      "bytes": 56776,
+      "sha256": "d993031d2ea5014cf7afd49de6829e5893d1830e48c829b8cd423e0828c7f8b8",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_16734863_3e9c5ebd01ff45afbda54b9b2d5fca05.png",
+      "bytes": 511332,
+      "sha256": "fab2c0a3002fe50ff2cd9168c1f391db8ac196ee6613f5bc20084e655710339c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_16741299_c3a4526e0b3946d2997ed3bfda87915a.png",
+      "bytes": 54872,
+      "sha256": "3b2e2ca816f7baeebe22c155765ee295174c57145b190f259ac888638666c15d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_18895762_db3abf2b-5022-4203-9c2e-5949cb6e3e39.png",
+      "bytes": 54316,
+      "sha256": "812524018c8d5bdbe8062a920a56dae3e82fde4906bf32859f127cdfac776810",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_22658024_a671c2f9501b41f7ae462ad0e34708a3.png",
+      "bytes": 160620,
+      "sha256": "2955075803cc4774e0df61e6a335a10b562b02e636515bffd241311b87c166eb",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_24981273_9b391a5d-e971-4083-8001-5ac51846417e.png",
+      "bytes": 484099,
+      "sha256": "3a1dbc4fe5c876e7865f08d8ffb475f420284f371724adf0ff6a206dddb72f5a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_25745622_48b87252afad4d31893fcf5fc0b71de1.png",
+      "bytes": 15856,
+      "sha256": "438ae4e9d58319df6adf64675c8114122a3003f30a4dda8a7b5b005f130a449a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_26299451_4d30e3409593432e881f31e927097ef1.png",
+      "bytes": 60930,
+      "sha256": "6b0ccc7a2aac29955ed9c1d193d6e6bde3a43b1c6f3f9c9faa917a613e7b2e8e",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_27436430_1b477f0088c34298846c47d583228a3b.png",
+      "bytes": 44122,
+      "sha256": "dc217949fb809defbeb61a327a30102cabc47f7f9023a0598a1b443b38c39433",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_27575534_693123ed-3ef5-4050-87c4-2789b8e846cb.png",
+      "bytes": 894288,
+      "sha256": "a4ef5664938b8e2121bfb30c4637ac9b2099aa0330469243892563d153e4792a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_27580705_2a6712ac751148bebd6e7f3277ec6ea8.png",
+      "bytes": 144310,
+      "sha256": "340a651c0b80dd1658a3cbb8c8326572a45f46d7ed1721e35710214d5d66b019",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_27744736_3e5a4535956f43c8ad657e4f75dfb8fa.png",
+      "bytes": 56338,
+      "sha256": "e488c8eff7dedb7fddbae952010bba40b6eb8e83d6c5b47dcb0afdc67505098c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_27960622_02c7e2cd92e9459ba8d748bcdfa9c273.png",
+      "bytes": 43517,
+      "sha256": "2381760c309ab7702e813835bd55aca1279818b05854e222b7f6f0a2462641d5",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28068647_79b9eaea-b5e2-4cc9-9b02-0421162bde13.png",
+      "bytes": 52767,
+      "sha256": "99f4be45cb88430e501ba85dea180732b6583d4535bf455e2158cfd652db2a72",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28129986_c5faaa95bcb947de9d67e83a76961f5b.png",
+      "bytes": 151658,
+      "sha256": "1e3c1506c8f0bbdc9f8b79fd1a812369639d631474d1fcd9d0a6619c902c2f66",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28135677_3835ca44-571a-4c8c-ad20-c7f7afed505d.png",
+      "bytes": 550846,
+      "sha256": "88e1e5a5429d6f142acf5ddd9fbb4e820b0b80c7d69b768b172db780ac6bdd8f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28169030_dd9d5881d02543e7a0a4dd77d5848d70.png",
+      "bytes": 271628,
+      "sha256": "add5b81b7fb5e18e45184216e9fd6005e4acb5f51ccd6816dd4f3546b60dba1c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_2817797_d6b5317de3f44bca961c059677e658cc.png",
+      "bytes": 62650,
+      "sha256": "6f853ea209cafae669d23e74e0370028f99fb24e953639355789f8172186734c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28259355_31bb411c21494c92996a88b732d3a4bb.png",
+      "bytes": 33892,
+      "sha256": "a56ca4160e7701cc2bafc4afa18a2e5e21d29a63e04db83f3d8479131041ed89",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28262705_f0d82416a3c84bdda93579a616ef634f.png",
+      "bytes": 56450,
+      "sha256": "28263d39d2f51e235257a0647f7364e9a3d0d07630e6649a9a8f67079c2f412f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28271412_89a580fde5e642639fbba0c49ca034b6.png",
+      "bytes": 75536,
+      "sha256": "e004b4042dcdbacc33f787f84b89c4904950766b597c144a780110935d0f3bcd",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28272817_2b28886ac6864587b4810ba91fa7eae5.png",
+      "bytes": 57381,
+      "sha256": "4c77e14038b6e1add22579341bb42a9d281b2d3305e0b788c388a21677ac4186",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28284953_89303564748f4075aa4397de70197cb1.png",
+      "bytes": 215907,
+      "sha256": "2ec6a7b6887783aca1dcd45b931a6e93c1037c59983963181278a66e2af210f4",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28293371_44a2a440-f4c2-4884-b87d-9ce389178d73.png",
+      "bytes": 39471,
+      "sha256": "01997a06f9b9d78d4ed95d4e4ca642468a41d345053fb13317833fb1a5264770",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28312398_d87d188048264794b1d26a9f69616e3a.png",
+      "bytes": 29018,
+      "sha256": "f4f1d7d85c6007c4668374fddb4a867ddcc39a91763bcf818a4f6a9f3e5c4967",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28312399_c022006c7d014c36b8dbe6c24d9539da.png",
+      "bytes": 161648,
+      "sha256": "9b844aca6ade272c9784b35eed993b42a8a22b25001b8c2fd65d51d4bcc32c94",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_28421558_5861f354-1c54-4a5c-a034-50cec04c871a.png",
+      "bytes": 20425,
+      "sha256": "53b7b9b20f3003c03a291ec61d3120519984ae17bfb7ff362d1fe90d860cbf16",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_30528312_34791027-5897-48a2-b6fa-e6d1a1536afd.png",
+      "bytes": 853642,
+      "sha256": "880badc936fd837bba448a047d85958df8feea69afd02cd9055ee1ea9d651336",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_30660158_6627fe01ced54210b1f935bb47414fed.png",
+      "bytes": 59908,
+      "sha256": "4fd9d405b5cd984078915c95a39ec9a9a05e419362192c21dcb895e1147eacdf",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31066305_0c1c59a4-4923-4354-b67e-d1069e8db442.png",
+      "bytes": 14252,
+      "sha256": "f8893a721094dfa6433c6fb34812718e37a3fa4e41ff2177dafb4ec9b5f4c768",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31081612_6a3191a192b849e7a0d56fb44b124cc5.png",
+      "bytes": 73415,
+      "sha256": "792a2f30c1d29150b73f7be0ebba0c303b4d339d3d980b540e6d42f59854c0db",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31176777_324d53a4d2c94d8c84ed11c2f56fdddb.png",
+      "bytes": 45673,
+      "sha256": "12e05a9e7fb6db379313d998c99ca1ad4fa74192f9506af793a0f68d6bbe4c4a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31252495_7a8be000-ecff-4b5d-a7de-38414180e96a.png",
+      "bytes": 763386,
+      "sha256": "f6ccfa12f5b35850a6b0246895ee98444d8562b3314e96ab4088c56dba273597",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31384808_0ce2fe8bbd7d40f1a777e458ff46a26b.png",
+      "bytes": 57034,
+      "sha256": "1edf48bcd48d9ddd1fe23e1553d905a0f142941475ee8ca6996f162b1ba9ccd5",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31471414_2d3ad9d7ecfa42af94302f31118255dd.png",
+      "bytes": 28982,
+      "sha256": "e46952ad06a95eb0df5bd420fc64a3dee2941212abce4a5727f6089c77c71bb2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31476038_d207c587ffa1497bb3427c4f6b51eb1c.png",
+      "bytes": 9985,
+      "sha256": "726c040aa2b46236c0dbd149aceb51bdcc6b9a0258e9a5fb27484abd236993b9",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_31684003_8c84ef5d4bbd493e833f5e0571d22c5d.png",
+      "bytes": 23415,
+      "sha256": "e444b6489e003ab3826b14741e46120d7a2e0df7102b79b408a1588e2c69dd00",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32347585_ab135ebeccc446e3a6d69d13afc47cdb.png",
+      "bytes": 40952,
+      "sha256": "e60a508995600e01a9ec54ae92d986af17af6c479eddfc4e75e7b32e9d0bd883",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32621723_ef4d22f0a4f2445e9902771b7172fe0b.png",
+      "bytes": 13356,
+      "sha256": "a9e90999df6300c877f6b241b98320fea5aa8998e092558b92fbc6459400568f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32621728_39fa6437845f4114a4cbdf880c1ae527.png",
+      "bytes": 367633,
+      "sha256": "0478f1bf74214eaf0ec34e14cfff37f1d2647d0697495348adefce09d97095f5",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32621735_78886a6d1eb74bd8951d36367abbdd9f.png",
+      "bytes": 410617,
+      "sha256": "c95106b30f720870c14646b21ba7629ad6c161004ff429e5523f78f5dbf852cb",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32621738_ba36740fb877479d90e21438f9ca5bac.png",
+      "bytes": 215175,
+      "sha256": "47b42ad11df356a87137f3fec1f2948ef989aec1e1e02cc6c2c39b1f2b175d1f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32694987_0b749a3213a142078d95b5b9da14df13.png",
+      "bytes": 55638,
+      "sha256": "c180f0150e89ac6f2713a363e736d6f70c55899041f381f724daae3aaee2ddcc",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_32749284_c27c67ea70ae4a0288466ec28d58d957.png",
+      "bytes": 99852,
+      "sha256": "648f34703822f37b82879b3b23b21145880ef1edbef7160f0a89de053b7604ed",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33012019_515c6605ea7b43faaf8f1d8ebf60f74c.png",
+      "bytes": 58593,
+      "sha256": "378c20ebfc099d35a68472af36c037d2585174bf0835d9de7f3c22893461d668",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33036437_7a805717f7cd44339344f8b4865c4ae2.png",
+      "bytes": 85309,
+      "sha256": "15e9c0cea6740d28e897d6d5f547161bdd9040c259447db1c4ed1997dac170ba",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33075114_7782c69d86b64b8796a80840ab44dfa3.png",
+      "bytes": 153145,
+      "sha256": "25d86b8d1186698215e64d12d62e1ca7725905f613a282c16c0f8d588046635d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33105226_72d1bdb5-5c23-447b-8cce-0780b0e01042.png",
+      "bytes": 2049960,
+      "sha256": "5f41979b31e867c5d0a5df3c515a48d8089d8f44859362abbcffc531ac93d1fe",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33106651_387b0ada6928415ea4b15d21378b17ba.png",
+      "bytes": 218091,
+      "sha256": "70e038add2b90e24e3e7d7f8dd7bf36b9ce0463c5fc02ba5252950d479647d0c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33153515_17a7bc4b48184fd38980d7666d1c78a1.png",
+      "bytes": 70954,
+      "sha256": "ac31b96ff571f99149209fd86adf8387b7d4105e7798065cde975ad94750df3a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33156881_6a6751d61ae74260a1214c86320c5545.png",
+      "bytes": 452381,
+      "sha256": "67477834680f6ef73744ee07ba65b9678f530250f9d3951610dbf35aa1439d10",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33284647_cbd8f0224ef4439580080179288888df.png",
+      "bytes": 47966,
+      "sha256": "4db788e1d025e0136994a0b4a59e250fa963ba7f6be33ba345ed382ba13bceed",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_3332505_72c577a515b640a3bf9fc37050038263.png",
+      "bytes": 39905,
+      "sha256": "87352532901d9d6bc1be06b6fe0e81c0e31beb02a67e777fc751dbeed90a52f2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33363290_ce9c8973e76d46cbba14ed2dbe7a5803.png",
+      "bytes": 232763,
+      "sha256": "f514c299edac9413e91102013e4b5d533093f0c272a2cd6f0d4866e6115e4a71",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33432087_484393879d0f4d028fba6713448d3bc8.png",
+      "bytes": 42496,
+      "sha256": "1aa63f4baca35e60673674b2e0a0370f57844e3b0e0d18ace5c7d0783b81c345",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33495749_19610aa4926e4252afc0b23c06a35c71.png",
+      "bytes": 129092,
+      "sha256": "b4af37b64c637ed26f03b48f808fcddcf1860953bbb5743cba442fb116bd7921",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33509791_b427839f21e64dc4a91acbdcc864cb32.png",
+      "bytes": 294474,
+      "sha256": "ca40791b2b659e6d400fc2ec9f0267ede1c20e97f87776afcfe09abc51bea126",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33720017_f51af04b467f41919df593d169342283.png",
+      "bytes": 204727,
+      "sha256": "d80c80d41ae287ad29ed977729ed8a36b3364f563a33f134e08ddb2d525db737",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_33731805_7a5cd36551fa43a98a10f17beb2b972b.png",
+      "bytes": 40709,
+      "sha256": "f4e4a1cbd3c0dcc43ca7bda02d0d61a75e1fc8ffc71b342a20b81d9759079704",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34339811_da91fc0de7014a8694332974822aecdf.png",
+      "bytes": 92745,
+      "sha256": "b4431b32a7f658916fcad35abd73fe3385e9e47de89be69017bc2b7df99b5376",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34362968_dd3186bf655d424d98a256d78657bfc5.png",
+      "bytes": 188629,
+      "sha256": "e0e18b39a82d5c82a73c57f37f5e8f54cf7a3f55353717da71970104fe43b387",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34493018_48605ba72de74814a181492ed8ccda4f.png",
+      "bytes": 218990,
+      "sha256": "f6dc2098d7c11381369ec533db5eba77c97e5f94b96dc46b52196e8c37af9c13",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34523518_dc91598026da4593a6c26e5c3eb8cae1.png",
+      "bytes": 104478,
+      "sha256": "6a830f1bd5e76a7825bae9f2225f4cdc25f9a2953f8657de68019e25d06ae86d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34573185_ab52f575e8cd49a5b28d71ee3737e3a7.png",
+      "bytes": 26039,
+      "sha256": "4f2bcb8c8d2e5711bac4e3e829ae9df88550a1f6637ec63cce6a49de86590c7d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_34948281_75ede49c10dd4a2e9566d0ab1c8b133b.png",
+      "bytes": 101579,
+      "sha256": "c8a2da84bb0c880cbdb7a5d2e1c8a66e0bbd09bfb0b51493ad8a5cff5024677d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_5448551_581defd0cae7449fb4ef237b6b96cc8c.png",
+      "bytes": 38782,
+      "sha256": "5c7218e9d2eb7838637a285f2d0a75c0683147223952efeeb81cb2e01792d363",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_7090528_1db5bda1b1df4dbb82637c70e2568411.png",
+      "bytes": 21319,
+      "sha256": "7f30271c0394fd40424eaed3c219426a065c20a0e80d6dff3bcbda282ba26057",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/assets/zujuan_7777764_f571a9ad4cd840bfa3773d02b0d3b0c6.png",
+      "bytes": 33425,
+      "sha256": "d1e67e3a322e1c28296a061d92f713f5be05feeb587fa2722acb1039ff593ddb",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3051388.html",
+      "bytes": 229963,
+      "sha256": "f7052ab1ac7844bd3138d48459fb30e65dfe4f28f54aa48aeb0518a832ac0495",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3051567.html",
+      "bytes": 225554,
+      "sha256": "3f83010e7d34e4596e7d191ba456b3ea8a362950e3a8a9a53e70cff0e6469878",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3051910.html",
+      "bytes": 140701,
+      "sha256": "fc83841489a887d0d5a953118059559d6e429ddd12b9d355d590ffff8043adaa",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3051960.html",
+      "bytes": 206649,
+      "sha256": "b757362be4613d62b2ef1eafbe1367ce80b47490ca99d72f5ac57caa7e96d8d6",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3052071.html",
+      "bytes": 137784,
+      "sha256": "5f7393ef1242ff625426c4c9935faaf1e68b63b9088328393db25a44a392ad6e",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3052106.html",
+      "bytes": 216443,
+      "sha256": "ef7133e9d0bfd67826748e83eef9b27bd8918df6cbc29bf10c6f47d51d0332a8",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3052517.html",
+      "bytes": 215879,
+      "sha256": "03fe1532879fa57f118ee22f60363ea8319f81898d5ed26fdd2e40fb90b4ba40",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3063642.html",
+      "bytes": 221848,
+      "sha256": "be0809c08aae17e5722638f4a18eadf5384da417acd9749ab7ef4be623a1987b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3063648.html",
+      "bytes": 235629,
+      "sha256": "03d8bf20c9158a834a692f4492271509fdfbc89538db0e1c8cec6cff27f398d8",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3063843.html",
+      "bytes": 244705,
+      "sha256": "f7a0743546dcc583946b92407701be0c47c2f82cbd29be97c1fcdc10c1d1c1f2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064284.html",
+      "bytes": 199988,
+      "sha256": "086f7a356906df1dd0c1737f26a6d8556936957ebab0eb8fc09bc89d19d793cd",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064530.html",
+      "bytes": 183070,
+      "sha256": "d954fd94960a0c1e8eaa4783b064cf3206b8e03ac5c964277e9dae4638e68629",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064610.html",
+      "bytes": 199285,
+      "sha256": "55392a8be1a3e42578f71dd608b76dbd526f690642226987bdc988e46b2b5e18",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064935.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064996.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3064998.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3065095.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3065118.html",
+      "bytes": 277988,
+      "sha256": "a8db1695833eed8c33830b58e56e30db48df963ad7a2478e00f0079eb1d332b2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3065177.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3065370.html",
+      "bytes": 284754,
+      "sha256": "60bd0e4ded01027f1eeb2a5183254053d1466cbe692e2b8220466ebbf9ccfcea",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3065817.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3066270.html",
+      "bytes": 277278,
+      "sha256": "c73e29f9d34f3784b228090a81ce4dc831aacc5f3624c0b0570bf637be9c7337",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3066701.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3066764.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3077526.html",
+      "bytes": 8233,
+      "sha256": "cad876643ace21d996832d4167abd715e1c0f6374aac30f7725b032da2a0910b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3077527.html",
+      "bytes": 153607,
+      "sha256": "bd7eeb191781109331a6c36d9d291913456d585b5f03fc11755bcc8242cfd4c2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3119120.html",
+      "bytes": 8233,
+      "sha256": "da2eb00f42e082ed6f55861843a747ab5550cb73b4cd5ba3ff0ea8788de688d0",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129168.html",
+      "bytes": 153023,
+      "sha256": "26bbf4df2d6e9f8a3c8673d8b8d92d4a4716e33591e5b5c32290f9b0e29d5e4d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129177.html",
+      "bytes": 8233,
+      "sha256": "da2eb00f42e082ed6f55861843a747ab5550cb73b4cd5ba3ff0ea8788de688d0",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129181.html",
+      "bytes": 254320,
+      "sha256": "934eb6aceee5657e84662d257770ec35675c485289643ec1920d5bd230af6c18",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129187.html",
+      "bytes": 193353,
+      "sha256": "295926524618f624d567403770993c53127fca0d5b4ebdf4c89065c47c74201c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129202.html",
+      "bytes": 169856,
+      "sha256": "e0026557eae2a7755c32a6dff84f4eb751916f323298960c3364304c838387d6",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3129210.html",
+      "bytes": 166862,
+      "sha256": "4426c3f64d9997fb8a5b4f5b9ca38dd3691c0149f5cb77ae661457f9547c5139",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3145714.html",
+      "bytes": 243417,
+      "sha256": "34f0a0a76c98d840e5bc37a24b65483511fe082e3911e48cc277717adfe94e5f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3150416.html",
+      "bytes": 228228,
+      "sha256": "bffe8c6824b833a4dcb55528d94ee9c3f1c46a3225eb31e8169eee75cefa8f97",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3169785.html",
+      "bytes": 328437,
+      "sha256": "38e98d830d7c2e793770fb42e19fd0ceae9b2e63089457b67da0727c74ab1194",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3170777.html",
+      "bytes": 233616,
+      "sha256": "230f342a9096895008b2f190c934e6264d0f0a2ca320917b2796f29966e9ab45",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3173893.html",
+      "bytes": 326478,
+      "sha256": "6b7d384bee4d7e639f1c2bdaf26bbf180c15f111578e04cb902e33c2c2a227f8",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3180340.html",
+      "bytes": 285736,
+      "sha256": "651e0edc2c08e8adf5325f53b741dfb7a66611049789302a4e9d913c2a9df6d4",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3181142.html",
+      "bytes": 369682,
+      "sha256": "b1aa81a9d5036ab2cd8bc0b8ec3c3ee4eebf229e3eb9dcc29db44ce2d9005931",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3182879.html",
+      "bytes": 312223,
+      "sha256": "9938a301f435437f241cb5e4d6b024dca7ac4f758aa8108ebe5803f88f523107",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3194581.html",
+      "bytes": 220528,
+      "sha256": "d88969d5a3e1ccad53c3d269968340db68d5dbbaa37af0db770e7435235d6bbf",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3281838.html",
+      "bytes": 249728,
+      "sha256": "0052cbdefd0361f5344e2cc39f598454d52660893da63c6d8f5184efbf706050",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3281841.html",
+      "bytes": 159870,
+      "sha256": "f5b48489d7219d1f11e2b710ce39818a47f35024ccba49b6765298ac51745773",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3282122.html",
+      "bytes": 158731,
+      "sha256": "17cd3d58180b6be08d02c1fa6c72b02c9fb74b8c309ac3cbc21191e23e270ec4",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3424060.html",
+      "bytes": 153900,
+      "sha256": "6d68e09a584a075e42d678f551fe0528e15e7b34d03be3df96d7695af93034be",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3424067.html",
+      "bytes": 230698,
+      "sha256": "43b727c9e1204d5c5bb08206b4e9db35e91260cec060a13a89d12e2a6a46c775",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432202.html",
+      "bytes": 117320,
+      "sha256": "cafdd44ce0d77112c4def9388adbde9a330e476bcc974f1819bd366a8dec8beb",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432206.html",
+      "bytes": 117741,
+      "sha256": "bb8c78e5d62a36dc24bf3e4cb3cffcf1d1b1ad8663cd014fbf17c898615d4bab",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432209.html",
+      "bytes": 171503,
+      "sha256": "642827ea9bb315d1d9241b84b449773658d4531fb0ed83299668278596689927",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432222.html",
+      "bytes": 157504,
+      "sha256": "95f265fe843df4cc868da67c472ec401294d2ac0f2ba2ed7183cb5d4b841d4ed",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432227.html",
+      "bytes": 118006,
+      "sha256": "eb8ed7a62744b53a39f509073832f9cfdc4257d93ddef3fe9f09666b24e42895",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432231.html",
+      "bytes": 158403,
+      "sha256": "aee048153624d11f85154554894cbf4eb318611eee34c4780739451539845a91",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432331.html",
+      "bytes": 121547,
+      "sha256": "6cdc2347856e510265d91253c5b360831f7b111de27952fa1bb62eab1b7fd132",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432342.html",
+      "bytes": 148952,
+      "sha256": "24d3c4c9b54489376b54430d1a99c5dd380fac43441b3a8ed59950f6b4ee68d6",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432366.html",
+      "bytes": 119218,
+      "sha256": "1f828e705437b9cc502212a8ea86e932121695b66e47fe18bb171ff57368088e",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432396.html",
+      "bytes": 123247,
+      "sha256": "448f9965a0bd24497b70c4ef773fe134700ab28f95a807b74e118755ccbc8fad",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432404.html",
+      "bytes": 162274,
+      "sha256": "a2c8dfb75ad45d4a497392ac7abf4d200f90de8b344f1b48d631152bb6827a57",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432410.html",
+      "bytes": 108649,
+      "sha256": "be2156a76d8ff902b23834aeaa04a94d588bd85a1ed4e0071f69b6ab7cb42fa2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432414.html",
+      "bytes": 110576,
+      "sha256": "0b1c844a071547ad07bff531ed57ab067fc78af6823958e00c593cade0b6e15d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432418.html",
+      "bytes": 118831,
+      "sha256": "412862012a68e51375965e294b258f87472ea2be7243135f83cce3b1e06553f4",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432428.html",
+      "bytes": 104964,
+      "sha256": "1d53eeb873f7c981396080268079b7612fb54a558f06e35390c99a80543bb3f7",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432430.html",
+      "bytes": 147533,
+      "sha256": "ae131c9c837206521534702dc8a4030c8829d3aaf75db91e194501d9f6f53855",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432444.html",
+      "bytes": 157868,
+      "sha256": "2d9845101c07a1f10ce5415029b8252a576e72d5bef5126b842a074084629583",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432448.html",
+      "bytes": 121556,
+      "sha256": "4657e41b9957fe2b9866378f3c147c775535d69341b978be0b73ca3787f128fa",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432460.html",
+      "bytes": 135799,
+      "sha256": "6c5128c4403e54a3f7f67b2b9db452c0db3a5a73dad738615c5dc79b8e071893",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432462.html",
+      "bytes": 125053,
+      "sha256": "10b7a0e40c70c59b4cb85158e996461728d0ac4e08b5a308226f38c2eb4b4292",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432966.html",
+      "bytes": 122855,
+      "sha256": "4c4aa1300d78e80ae5b481e49c2fb5c91a7f5cc8d1fe975e4c1c784f36ff9fcd",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432970.html",
+      "bytes": 131972,
+      "sha256": "663a8da409f7b9900913ae5e08463f440743ebab174594b6b12b1fe6571c1f8d",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3432983.html",
+      "bytes": 171850,
+      "sha256": "f7d91d662c0a86a0e153ff8d01d5df04a3a5d382a67ee1c0d4f793d6d1ee097a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3433001.html",
+      "bytes": 151273,
+      "sha256": "27033a9f1774be4f6e474f164a45e591f222f55f7a4887a5f10147b96b67fe25",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3433027.html",
+      "bytes": 159058,
+      "sha256": "b075ae9fec13e3622fa12735c3c42fe232efe47c48d71a25b3e31cbbb84b5587",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3433226.html",
+      "bytes": 123903,
+      "sha256": "ecb6d547ffed64bbb50a76b5c8ca62e8bf6b3d48c0cdaca395473a7dffe843d6",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3433277.html",
+      "bytes": 119095,
+      "sha256": "c1fa0005c47dc3f268916df61288b538592f45ac18c1161ba524417245dc5d33",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3438674.html",
+      "bytes": 136621,
+      "sha256": "d4ae83b798c9c4718129528304f67d147c5984be476ae769cc87965fe943bd08",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3438958.html",
+      "bytes": 135020,
+      "sha256": "0fa514de3b09c575bbb1aac2a6c3e68162ee650b19daf114b6f22b4637c131c2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3440660.html",
+      "bytes": 138420,
+      "sha256": "81068152f94d3bf458e3c76875cd28a7cd2d21895b72c5ac03edd97a31176fb1",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3441135.html",
+      "bytes": 213726,
+      "sha256": "3647dcbad7bb90fd241edd294571a5457d986a81a2154ff630af2a3cd7091594",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3442302.html",
+      "bytes": 130656,
+      "sha256": "77832974a4abbb2a2e78e2ed0c5ec76d0e7dee74feee9106a2156192ad271ad2",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3442504.html",
+      "bytes": 127356,
+      "sha256": "3eb4821ffa321e0df363a24b1d57fb86f11f29a02838c75b77fb414d15a2f54b",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3442808.html",
+      "bytes": 94342,
+      "sha256": "708325ea0464f9389c0c9bd744109de2e7cf142f1b4362ebdd420cb107409579",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3442816.html",
+      "bytes": 130637,
+      "sha256": "b4599a8341615ba9690db90d7cc1e38482534d20b498d705ee5d45321be6e875",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3443343.html",
+      "bytes": 116438,
+      "sha256": "77f2c79ffa437a9de0557791a77d9c8b841fb39a5205515d35812075b8112a8a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3444379.html",
+      "bytes": 210441,
+      "sha256": "941345251aec6492584753dcdb99558b0321eee25bd32f32b823bfda7cb4424a",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3444726.html",
+      "bytes": 214965,
+      "sha256": "71fad0f617e4b4cca29c8fa80268b4ef79924eaf9791a386b78a7f9792772046",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3445517.html",
+      "bytes": 137031,
+      "sha256": "2687303931eef7bb0624bb03be60ba0c1f51dbe33110618481574ed26a544028",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3446053.html",
+      "bytes": 221626,
+      "sha256": "a9d2c332ed1c5101d305247b7bc66af32545d0073d54672964be7767c6068149",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3448004.html",
+      "bytes": 213868,
+      "sha256": "f794df65bcfb7b881161bc53171deccd223ab5233d286bf7b0ec791589cb5f36",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3448389.html",
+      "bytes": 135913,
+      "sha256": "5a6f5cb780958dda47bb1e535878a0fef1a1019f1c527f804b5d43ff50d564d3",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3461771.html",
+      "bytes": 107018,
+      "sha256": "b9a101c99ed460e6af1a913af93bcce2540040a55e5d33e4fd44cb3a3c66d6b7",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3462296.html",
+      "bytes": 135214,
+      "sha256": "0a52a5d0a8df032b6708a182309ce8c0dd6b09e51820d09968bc92d287d8ea98",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3462926.html",
+      "bytes": 119991,
+      "sha256": "685c318671737ffd38efe9658e0cf2411931ecb165fd25ff4793fd94694c062c",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3462930.html",
+      "bytes": 116894,
+      "sha256": "b79164665930cb6944b0636f2421557f50cb316a140b638009f4d651d3565b8f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3463189.html",
+      "bytes": 210130,
+      "sha256": "15dfb5c9502ff003a9615144b4d0d4511d0c6f38d960a4403370317e2801f20f",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    },
+    {
+      "path": "datasets/history/raw/zujuan_paper_3463365.html",
+      "bytes": 142156,
+      "sha256": "773156cc65b27f970428e457d94313d7358e034f7dec96bb75078b05065948b3",
+      "reason": "未被当前保留题目的图片/原始文件/答案证据字段引用"
+    }
+  ]
+}

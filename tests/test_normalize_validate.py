@@ -41,3 +41,21 @@ def test_validation_detects_structural_errors_and_group_mismatch(valid_record: d
     assert "duplicate_options" in codes
     assert "inconsistent_group_material" in codes
     assert summary.parse_failed == 2
+
+
+def test_confirmed_missing_image_dependency_survives_validation(valid_record: dict) -> None:
+    record = deepcopy(valid_record)
+    record["has_image"] = False
+    record["image_paths"] = []
+    record["quality"]["image_dependency"] = "image_dependent"
+    result, summary = validate_records([record])
+    assert result[0]["quality"]["image_dependency"] == "image_dependent"
+    assert summary.qualified == 0
+
+
+def test_stale_normalized_question_fails_validation(valid_record: dict) -> None:
+    record = deepcopy(valid_record)
+    record["normalized_question"] = "outdated"
+    result, summary = validate_records([record])
+    assert summary.parse_failed == 1
+    assert any(x["code"] == "question_normalization_mismatch" for x in result[0]["quality"]["issues"])
