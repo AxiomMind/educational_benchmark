@@ -4,6 +4,8 @@
 
 当前题库共 **3,995 题**，位于 [datasets/history/questions.jsonl](datasets/history/questions.jsonl)。它包含高考真题、模拟题、专题练习和课后作业，仍处于审核阶段，不能直接等同于已人工验证的标准评测集。
 
+历史选择题的模型评测流程、Direct / CoT 原提示词、八模型配置与运行命令见[历史评测说明](evaluation/history/README.md)。
+
 ## 目录结构
 
 ```text

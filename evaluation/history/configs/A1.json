@@ -1,0 +1,14 @@
+{
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "parameters": {
+    "max_tokens": 1024,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "mode": [
+    "direct",
+    "cot"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "endpoint": "http://127.0.0.1:8317/v1/chat/completions",
+  "parameters": {
+    "max_tokens": 1024
+  },
+  "mode": [
+    "direct",
+    "cot"
+  ]
+}

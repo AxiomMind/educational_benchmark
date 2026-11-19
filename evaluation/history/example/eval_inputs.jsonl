@@ -1,0 +1,2 @@
+{"question_id": "DEMO_TEXT", "shared_material": "", "question": "下列哪一事件发生最早？", "options": {"A": "辛亥革命", "B": "五四运动", "C": "中华人民共和国成立", "D": "改革开放开始"}}
+{"question_id": "DEMO_IMAGE", "shared_material": "示意图按时间从左到右排列，四根柱分别代表某作坊连续四年的产量，以同一尺度绘制。", "question": "根据图示，哪个时期产量增加最多？", "options": {"A": "第一年至第二年", "B": "第二年至第三年", "C": "第三年至第四年", "D": "各段增量相同"}, "has_image": true, "image_paths": ["images/output.png"], "image_sha256": ["a62cf8c12c2d8b56cce934c67384fe4b6ddc0a8d730527209cff3036083ec174"]}
