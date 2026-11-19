@@ -1,0 +1,14 @@
+{
+  "model": "hy4",
+  "endpoint": "https://tokenhub.tencentmaas.com/v1/chat/completions",
+  "parameters": {
+    "max_tokens": 1024,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "mode": [
+    "direct",
+    "cot"
+  ]
+}

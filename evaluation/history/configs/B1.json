@@ -1,0 +1,12 @@
+{
+  "model": "qwen3.5-flash-2026-02-23",
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "parameters": {
+    "enable_thinking": false,
+    "max_tokens": 1024
+  },
+  "mode": [
+    "direct",
+    "cot"
+  ]
+}

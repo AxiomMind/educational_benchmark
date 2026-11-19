@@ -1,0 +1,12 @@
+{
+  "model": "qwen3-vl-plus",
+  "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+  "parameters": {
+    "enable_thinking": false,
+    "max_tokens": 1024
+  },
+  "mode": [
+    "direct",
+    "cot"
+  ]
+}
